@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>素质测评</title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
+		<style>
+			.mui-plus .plus {
+				display: inline;
+			}
+			
+			.plus {
+				display: none;
+			}
+			
+			#topPopover {
+				position: fixed;
+				top: 16px;
+				right: 6px;
+			}
+			
+			#topPopover .mui-popover-arrow {
+				left: auto;
+				right: 6px;
+			}
+		</style>
+	</head>
+
+	<body style="background-color: #F9F9FB;">
+
+		<div>
+			<ul class="mui-table-view mui-grid-view" style="height: 50px;">
+				<a href="#topPopover2" style="color: #000000;">
+					<li id="showUserPicker" class="mui-table-view-cell" style="background: #FFFFFF; width: 50%;margin-top: 5px;">
+						<span style="font-size: 14px;">活动状态</span>
+						<img class="mui-pull-right" src="../images/check_box_normal_bg_01.png" style="width: 10px;height: 10px;margin-top: 10%;" />
+					</li>
+				</a>
+				<a href="#topPopover3" style="color: #000000;">
+					<li id="showUserPicker2" class="mui-table-view-cell" style="background: #FFFFFF;width: 50%;margin-top: 5px;">
+						<span style="font-size: 14px;">活动类型</span>
+						<img class="mui-pull-right" src="../images/check_box_normal_bg_01.png" style="width: 6px;height: 6px;margin-top: 13.5%;" />
+					</li>
+				</a>
+			</ul>
+			<div id="news">
+				<div id="refreshContainer">
+					<ul class="mui-table-view" style="margin-bottom: 5px;" v-for="item in items">
+						<li id="appdetails" class="mui-table-view-cell mui-media" @tap="open_detail(item)">
+							<a href="javascript:;" :data-guid="item.guid">
+								<img id="appimg" class="mui-pull-left" src="../images/active_1.png" style="height: 75px;width: 100px;margin-top: 4px;border-radius: 5%;">
+								<div class="mui-media-body">
+									<p class='mui-ellipsis' style="color: #000000;font-size: 15px;margin-left: 10px;">{{item.eventName}}</p>
+									<p class='mui-ellipsis' style="margin-left: 10px;">
+										<img src="../images/vol_team_date.png" style="width: 10px;height: 10px;" />
+										<span style="margin-left: 5px;font-size: 12px;">{{item.eventStartTime}}~{{item.eventEndTime}}</span>
+									</p>
+									<p class='mui-ellipsis' style="margin-left: 10px;">
+										<img src="../images/active_manager_team.png" style="width: 10px;height: 10px;" />
+										<span style="margin-left: 5px; font-size: 12px;"><span id='userResult3'>{{item.eventType}}</span></span>
+									</p>
+									<p class='mui-ellipsis' style="margin-left: 10px;color: red;font-size: 12px;">
+										<span id='userResult1'>{{item.eventScore}}</span>
+										<span id='userResult2' class="mui-pull-right">{{item.eventState}}</span>
+									</p>
+								</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="topPopover2" class="mui-popover" style="width: 100px;height: 130px;" align="center">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<a href="#" onclick="qb()">全部</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<a href="#" onclick="jxz()">进行中</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<a href="#" onclick="yjs()">已结束</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="topPopover3" class="mui-popover" style="width: 150px;height: 300px;" align="center">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<a href="#" onclick="qb2()">全部</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<a href="#" onclick="a()">思想道德品质</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<a href="#" onclick="b()">职场素养</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<a href="#" onclick="c()">学业与职业指导</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<a href="#" onclick="d()">职业基础能力</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<a href="#" onclick="e()">健康与安全</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<a href="#" onclick="f()">争先创优</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script src="../js/city.data.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			//document.getElementById("appimg").src = "../images/active_6.png";
+			
+			var gallery = mui('.mui-slider'); //获得slider插件对象
+			gallery.slider({
+				interval: 5000 //自动轮播周期，若为0则不自动播放，默认为0；
+			});
+
+			mui('.mui-scroll-wrapper').scroll();
+			var webview_detail = null; //活动详情
+			mui.plusReady(function() {
+				pullupRefresh();
+			});
+
+			function pullupRefresh() {
+				setTimeout(function() {
+					if(window.plus && plus.networkinfo.getCurrentType() === plus.networkinfo.CONNECTION_NONE) {
+						plus.nativeUI.toast('似乎已断开与互联网的连接', {
+							verticalAlign: 'top'
+						});
+						return;
+					}
+
+					mui.getJSON("http://47.92.82.112/public/index.php/szcp/Myevents/getAllEvents", function(rsp) {
+						if(rsp.code == 200) {
+							news.items = news.items.concat(convert(rsp.data.list));
+//							for(var i = 0; i < rsp.data.list.length; i++) {
+//								if(rsp.data.list[i].eventType == '职业基础能力') {
+//									document.getElementById("appimg").src = "../images/active_6.png";
+//								}
+//							}
+						} else {
+							return;
+						}
+					});
+				}, 10);
+			}
+
+			mui.plusReady(function() {
+				//预加载活动详情页
+				webview_detail = mui.preload({
+					url: 'appdetails.html',
+					id: 'appdetails',
+				});
+			});
+
+			var news = new Vue({
+				el: '#news',
+				data: {
+					items: [] //列表信息流数据
+				}
+			});
+			//活动详情
+			function open_detail(item) {
+				//若详情页尚未预加载完成，则延时等待再执行
+				if(!webview_detail) {
+					setTimeout(function() {
+						open_detail(item);
+					}, 100);
+				}
+
+				//触发子窗口变更新闻详情
+				mui.fire(webview_detail, 'get_detail', {
+					guid: item.eventId,
+					eventName: item.eventName,
+					eventState: item.eventState,
+					eventScore: item.eventScore,
+					eventType: item.eventType,
+					eventStartTime: item.eventStartTime,
+					eventEndTime: item.eventEndTime
+				});
+
+				setTimeout(function() {
+					webview_detail.show("slide-in-right", 300);
+				}, 150);
+			}
+
+			/**
+			 * 1、将服务端返回数据，转换成前端需要的格式
+			 * 2、若服务端返回格式和前端所需格式相同，则不需要改功能
+			 * 
+			 * @param {Array} items 
+			 */
+			function convert(items) {
+				var newItems = [];
+				items.forEach(function(item) {
+					newItems.push({
+						eventId: item.eventId,
+						eventName: item.eventName,
+						eventState: item.eventState,
+						eventScore: item.eventScore,
+						eventType: item.eventType,
+						eventStartTime: item.eventStartTime,
+						eventEndTime: item.eventEndTime
+					});
+				});
+				return newItems;
+			}
+			//全部
+			function qb() {
+				pullupRefresh();
+				news.items.splice(0, news.items.length);
+				mui("#topPopover2").popover("toggle");
+			}
+
+			function qb2() {
+				pullupRefresh();
+				news.items.splice(0, news.items.length);
+				mui("#topPopover3").popover("toggle");
+			}
+			//进行中
+			function jxz() {
+				mui.getJSON("http://47.92.82.112/public/index.php/szcp/Myevents/getEventState?state=进行中", function(rsp) {
+					if(rsp.code == 200) {
+						if(rsp.data == '') {
+							pullupRefresh();
+							alert("暂无该类活动！");
+						}
+						news.items = news.items.concat(convert(rsp.data));
+					} else {
+						return;
+					}
+				});
+				news.items.splice(0, news.items.length);
+				mui("#topPopover2").popover("toggle");
+			}
+			//已结束
+			function yjs() {
+				mui.getJSON("http://47.92.82.112/public/index.php/szcp/Myevents/getEventState?state=已结束", function(rsp) {
+					if(rsp.code == 200) {
+						if(rsp.data == '') {
+							pullupRefresh();
+							alert("暂无该类活动！");
+						}
+						news.items = news.items.concat(convert(rsp.data));
+					} else {
+						return;
+					}
+				});
+				news.items.splice(0, news.items.length);
+				mui("#topPopover2").popover("toggle");
+			}
+			//思想道德品质
+			function a() {
+				mui.getJSON("http://47.92.82.112/public/index.php/szcp/Myevents/getEventType?eventType=思想道德品质", function(rsp) {
+					if(rsp.code == 200) {
+						if(rsp.data == '') {
+							pullupRefresh();
+							alert("暂无该类活动！");
+						}
+						news.items = news.items.concat(convert(rsp.data));
+					} else {
+						return;
+					}
+				});
+				news.items.splice(0, news.items.length);
+				mui("#topPopover3").popover("toggle");
+			}
+			//职场素养
+			function b() {
+				mui.getJSON("http://47.92.82.112/public/index.php/szcp/Myevents/getEventType?eventType=职场素养", function(rsp) {
+					if(rsp.code == 200) {
+						if(rsp.data == '') {
+							pullupRefresh();
+							alert("暂无该类活动！");
+						}
+						news.items = news.items.concat(convert(rsp.data));
+					} else {
+						return;
+					}
+				});
+				news.items.splice(0, news.items.length);
+				mui("#topPopover3").popover("toggle");
+			}
+			//学业与职业指导
+			function c() {
+				mui.getJSON("http://47.92.82.112/public/index.php/szcp/Myevents/getEventType?eventType=学业与职业指导", function(rsp) {
+					if(rsp.code == 200) {
+						if(rsp.data == '') {
+							pullupRefresh();
+							alert("暂无该类活动！");
+						}
+						news.items = news.items.concat(convert(rsp.data));
+					} else {
+						return;
+					}
+				});
+				news.items.splice(0, news.items.length);
+				mui("#topPopover3").popover("toggle");
+			}
+			//职业基础能力
+			function d() {
+				mui.getJSON("http://47.92.82.112/public/index.php/szcp/Myevents/getEventType?eventType=职业基础能力", function(rsp) {
+					if(rsp.code == 200) {
+						if(rsp.data == '') {
+							pullupRefresh();
+							alert("暂无该类活动！");
+						}
+						news.items = news.items.concat(convert(rsp.data));
+					} else {
+						return;
+					}
+				});
+				news.items.splice(0, news.items.length);
+				mui("#topPopover3").popover("toggle");
+			}
+			//健康与安全
+			function e() {
+				mui.getJSON("http://47.92.82.112/public/index.php/szcp/Myevents/getEventType?eventType=健康与安全", function(rsp) {
+					if(rsp.code == 200) {
+						if(rsp.data == '') {
+							pullupRefresh();
+							alert("暂无该类活动！");
+						}
+						news.items = news.items.concat(convert(rsp.data));
+					} else {
+						return;
+					}
+				});
+				news.items.splice(0, news.items.length);
+				mui("#topPopover3").popover("toggle");
+			}
+			//争先创优
+			function f() {
+				mui.getJSON("http://47.92.82.112/public/index.php/szcp/Myevents/getEventType?eventType=争先创优", function(rsp) {
+					if(rsp.code == 200) {
+						if(rsp.data == '') {
+							pullupRefresh();
+							alert("暂无该类活动！");
+						}
+						news.items = news.items.concat(convert(rsp.data));
+					} else {
+						return;
+					}
+				});
+				news.items.splice(0, news.items.length);
+				mui("#topPopover3").popover("toggle");
+			}
+		</script>
+
+	</body>
+
+</html>

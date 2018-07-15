@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>资讯详情</title>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #00B8DA;height: 50px;">
+			<div style="margin-top: 3px;">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left" style="color: #FFFFFF;width: 35px;">
+					<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+				<h1 class="mui-title" style="color: #FFFFFF;left: 40px;right: 40px;font-size: 18px;">资讯详情</h1>
+			</div>
+		</header>
+		<div class="mui-content">
+
+			<div class="kr-article-content" style="margin-left: 10px;margin-right: 10px;">
+				<!-- 文章作者、发布时间等信息 -->
+				<div align="center" class='mui-ellipsis-2' style="margin-top: 10%;height: 43%;font-size: 20px;margin-left: 5%;margin-right: 5%;">{{title}}</div>
+				<p>
+					<div style="color: #808080;" align="center">
+						<p style="font-size: 12px;" >
+							<span class="mui-ellipsis mui-pull-left" style="margin-left: 10%;">作者：{{author}}</span>
+							<span class="mui-ellipsis mui-pull-right" style="margin-right: 10%;">发表于：{{date}}</span><br />
+						</p>
+					</div>
+					<!--文章详细内容-->
+					<div id="kr-article-article" class="kr-article-article" v-html="body" style="padding-left: 2%;padding-right: 2%;color: #333333;"></div>
+					<p class="mui-pull-right" style="padding-right: 8px;">
+						<span>阅读：<spn>{{rdamount}}次</spn></span>
+					</p>
+			</div>
+		</div>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+
+			function getDefaultData() {
+				return {
+					img: '',
+					title: '',
+					author: '',
+					date: '',
+					body: '',
+					rdamount: '',
+					imgs: ''
+				}
+			}
+
+			var vm = new Vue({
+				el: '.mui-content',
+				data: getDefaultData(),
+
+			});
+
+			//监听自定义事件，获取新闻详情
+			document.addEventListener('get_detail', function(event) {
+				var guid = event.detail.guid;
+				if(!guid) {
+					vm.author = event.detail.author;
+					vm.title = event.detail.title;
+					vm.date = event.detail.date;
+				}
+				//向服务端请求文章详情内容
+				mui.ajax('http://47.92.82.112/public/index.php/news/News/info?id=' + guid, {
+					type: 'GET',
+					dataType: 'json', //服务器返回json格式数据
+					timeout: 15000, //15秒超时
+					success: function(rsp) {
+						vm.body = rsp.data.body;
+
+						vm.rdamount = rsp.data.rdamount;
+						vm.imgs = rsp.data.imgs;
+						vm.author = rsp.data.author;
+						vm.title = rsp.data.title;
+						vm.date = rsp.data.date;
+						vm.img = (rsp.data.img);
+					},
+
+					error: function(xhr, type, errorThrown) {
+						mui.toast('获取文章内容失败');
+						//TODO 此处可以向服务端告警
+
+					}
+				});
+			});
+		</script>
+
+	</body>
+
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>校园导航</title>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-bar-tab {
+				bottom: 0;
+				display: table;
+				width: 100%;
+				height: 100px;
+				padding: 0;
+				table-layout: fixed;
+				border-top: 0;
+				border-bottom: 0;
+				-webkit-touch-callout: none
+			}
+			
+			.mui-active .mui-tab-label {
+				color: #00B8DA;
+			}
+		</style>
+	</head>
+
+	<body style="background-color: #FFFFFF;">
+		<header class="mui-bar mui-bar-nav" style="background: #00B8DA;height: 50px;">
+			<div style="margin-top: 3px;">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left" style="color: #FFFFFF;width: 35px;">
+					<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+				<h1 class="mui-title" style="color: #FFFFFF;left: 40px;right: 40px;font-size: 19px;">校园导航</h1>
+			</div>
+		</header>
+		<nav class="mui-bar-tab" style="margin-top: 55px;">
+			<a class="mui-tab-item mui-active" id="bb" href="#b">
+				<div><img src="../../images/gg.png" width="50px" height="50px" /></div>
+				<span class="mui-tab-label" style="font-size: 14px;">公共区</span>
+			</a>
+			<a class="mui-tab-item" id="aa" href="#a">
+				<div><img src="../../images/xm.png" width="50px" height="50px" /></div>
+				<span class="mui-tab-label" style="font-size: 14px;">校门区</span>
+			</a>
+			<a class="mui-tab-item external" id="dd" href="#d">
+				<div><img src="../../images/jxq.png" width="50px" height="50px" /></div>
+				<span class="mui-tab-label" style="font-size: 14px;">教学区</span>
+			</a>
+			<a class="mui-tab-item external " id="cc" href="#c">
+				<div><img src="../../images/sx.png" width="50px" height="50px" /></div>
+				<span class="mui-tab-label" style="font-size: 14px;">实训楼</span>
+			</a>
+			<a class="mui-tab-item external " id="ee" href="#e">
+				<div><img src="../../images/zs.png" width="50px" height="50px" /></div>
+				<span class="mui-tab-label" style="font-size: 14px;">住宿区</span>
+			</a>
+		</nav>
+		<div>
+			<div id="news">
+				<div id="refreshContainer">
+					<!--校门区-->
+					<div id="a" class="mui-control-content">
+						<ul class="mui-table-view" v-for="item in items">
+							<li class="mui-table-view-cell" @tap="openmap(item)">
+								<img class="mui-pull-left" src="../../images/loca.png" width="4%" height="4%" style="margin-top: 1%;margin-left: 5px;" />
+								<img class="mui-pull-right" src="../../images/go2.png" width="8%" height="8%" />
+								<div style="color: #333333;margin-left: 10%;margin-top: 1%;">
+									{{item.name}}
+								</div>
+							</li>
+						</ul>
+					</div>
+					<!--公共区-->
+					<div id="b" class="mui-control-content mui-active">
+						<ul class="mui-table-view" v-for="item in items">
+							<li id="bxg" class="mui-table-view-cell" @tap="openmap(item)">
+								<img class="mui-pull-left" src="../../images/loca.png" width="4%" height="4%" style="margin-top: 1%;margin-left: 5px;" />
+								<img class="mui-pull-right" src="../../images/go2.png" width="8%" height="8%" />
+								<div style="color: #333333;margin-left: 10%;margin-top: 1%;">
+									{{item.name}}
+								</div>
+							</li>
+
+						</ul>
+					</div>
+
+					<!--实训楼-->
+					<div id="c" class="mui-control-content">
+						<ul class="mui-table-view" v-for="item in items">
+							<li class="mui-table-view-cell" @tap="openmap(item)">
+								<img class="mui-pull-left" src="../../images/loca.png" width="4%" height="4%" style="margin-top: 1%;margin-left: 5px;" />
+								<img class="mui-pull-right" src="../../images/go2.png" width="8%" height="8%" />
+								<div style="color: #333333;margin-left: 10%;margin-top: 1%;">
+									{{item.name}}
+								</div>
+							</li>
+
+						</ul>
+					</div>
+					<!--教学区-->
+					<div id="d" class="mui-control-content">
+						<ul class="mui-table-view" v-for="item in items">
+							<li class="mui-table-view-cell" @tap="openmap(item)">
+								<img class="mui-pull-left" src="../../images/loca.png" width="4%" height="4%" style="margin-top: 1%;margin-left: 5px;" />
+								<img class="mui-pull-right" src="../../images/go2.png" width="8%" height="8%" />
+								<div style="color: #333333;margin-left: 10%;margin-top: 1%;">
+									{{item.name}}
+								</div>
+							</li>
+
+						</ul>
+					</div>
+					<!--住宿区-->
+					<div id="e" class="mui-control-content">
+						<ul class="mui-table-view" v-for="item in items">
+							<li class="mui-table-view-cell" @tap="openmap(item)">
+								<img class="mui-pull-left" src="../../images/loca.png" width="4%" height="4%" style="margin-top: 1%;margin-left: 5px;" />
+								<img class="mui-pull-right" src="../../images/go2.png" width="8%" height="8%" />
+								<div style="color: #333333;margin-left: 10%;margin-top: 1%;">
+									{{item.name}}
+								</div>
+							</li>
+
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/common.js"></script>
+		<script type="text/javascript" src="../../js/immersed.js"></script>
+		<script type="text/javascript" src="../../js/userjs.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			var loc;
+			var wt;
+			var url = null;
+			var id = null;
+			var map = 0;
+			var adress;
+			var dlong, dlat;
+			var wdlong, wdlat;
+			var areaid;
+
+			function openmap(item) {
+				adress = item.name;
+				dlong = item.longitude;
+				dlat = item.latitude;
+				wdlong = item.amaplong;
+				wdlat = item.amaplat;
+				switch(plus.os.name) {
+					case "Android":
+						// 规范参考官方网站：http://lbs.amap.com/api/uri-api/android-uri-explain/
+						openAMap();
+						break;
+					case "iOS":
+						// 规范参考官方网站：http://lbs.amap.com/api/uri-api/ios-uri-explain/
+						openiosMap();
+						break;
+					default:
+						return;
+						break;
+				}
+
+			}
+
+			function openiosMap() {
+				adress = encodeURI(adress);
+				alert(dlong);
+				var  url = "http://maps.apple.com/?q="+adress+"&ll="+dlat+","+dlong+"&spn=0.008766,0.019441";
+				
+				plus.runtime.openURL(url, function(e) {
+					plus.nativeUI.alert("您当前没有安装地图，需多次刷新导航，如你需要更精准的导航请下载高德地图\n");
+					mui.openWindow({
+						url: 'school1.html',
+						id: 'bxg',
+						extras: {
+							nextdlong: wdlong,
+							nextwdlat: wdlat
+						}
+					});
+				});
+			}
+				 
+
+
+			function openAMap() {
+				switch(plus.os.name) {
+					case "Android":
+						// 规范参考官方网站：http://lbs.amap.com/api/uri-api/android-uri-explain/
+						url = "androidamap://viewMap?sourceApplication=HelloH5&poiname=博学馆&lat=30.692104&lon=103.81489&dev=0";
+						id = "com.autonavi.minimap";
+						break;
+					case "iOS":
+						// 规范参考官方网站：http://lbs.amap.com/api/uri-api/ios-uri-explain/
+						url = "iosamap://viewMap?sourceApplication=HelloH5&poiname=博学馆&lat=30.692104&lon=103.81489&dev=0";
+						id = "itunes.apple.com/cn/app/gao-tu-zhuan-ye-dao-hang-ban/id461703208?mt=8";
+						break;
+					default:
+						return;
+						break;
+				}
+				if(plus.runtime.isApplicationExist({
+						pname: id
+					})) {
+					console.log("高德应用已安装");
+					map = 1;
+				} else {
+					console.log("高德应用未安装");
+				}
+				openBMap();
+			}
+
+			function openBMap() {
+				var url = null,
+					id = null,
+					f = null;
+				switch(plus.os.name) {
+					case "Android":
+						// 规范参考官方网站：http://developer.baidu.com/map/index.php?title=uri/api/android
+						url = "baidumap://map/marker?location=39.968789,116.347247&title=DCloud&content=%e6%89%93%e9%80%a0HTML5%e6%9c%80%e5%a5%bd%e7%9a%84%e7%a7%bb%e5%8a%a8%e5%bc%80%e5%8f%91%e5%b7%a5%e5%85%b7&src=HelloH5";
+						id = "com.baidu.BaiduMap";
+						break;
+					case "iOS":
+						// 规范参考官方网站：http://developer.baidu.com/map/index.php?title=uri/api/ios
+						url = "baidumap://map/marker?location=39.968789,116.347247&title=DCloud&content=%e6%89%93%e9%80%a0HTML5%e6%9c%80%e5%a5%bd%e7%9a%84%e7%a7%bb%e5%8a%a8%e5%bc%80%e5%8f%91%e5%b7%a5%e5%85%b7&src=HelloH5";
+						id = "itunes.apple.com/cn/app/bai-du-de-tu-yu-yin-dao-hang/id452186370?mt=8";
+						break;
+					default:
+						return;
+						break;
+				}
+				if(plus.runtime.isApplicationExist({
+						pname: id
+					})) {
+					console.log("百度地图已安装");
+					map = 1;
+				} else {
+					console.log("百度地图未安装");
+				}
+				if(map == 1) {
+					getPos(); //调用第三方地图
+				} else {
+					var btnArray = ['确定'];
+					//alert("您当前没有安装地图，需多次刷新导航，如你需要更精准的导航请下载高德地图","校易通1");
+					mui.confirm('您当前没有安装地图，需多次刷新导航，如你需要更精准的导航请下载高德地图？', '校易通', btnArray, function(e) {});
+					mui.openWindow({
+						url: 'school1.html',
+						id: 'bxg',
+						extras: {
+							nextdlong: wdlong,
+							nextwdlat: wdlat
+						}
+					});
+				}
+			}
+
+			function getPos() {
+				wt = plus.nativeUI.showWaiting();
+				plus.geolocation.getCurrentPosition(geoInf, function(e) {
+					wt.close();
+					alert("当前定位失败")
+				}, {
+					geocode: false
+				});
+			}
+
+			function geoInf(position) {
+				wt.close();
+				var codns = position.coords;
+				var lat = codns.latitude; //获取到当前位置的纬度；
+				var log = codns.longitude; //获取到当前位置的经度
+				navigateWithMap(log, lat);
+			}
+
+			function navigateWithMap(longt, lat) {
+				if('Android' === plus.os.name && navigator.userAgent.indexOf('StreamApp') > 0) {
+					plus.nativeUI.toast('当前环境暂不支持地图插件');
+					return;
+				}
+
+				// 设置目标位置坐标点和其实位置坐标点
+				var dst = new plus.maps.Point(dlong, dlat); // 图书馆 
+				var src = new plus.maps.Point(longt, lat); //起点
+				// 调用系统地图显示 
+				plus.maps.openSysMap(dst, adress, src);
+			}
+
+			document.getElementById("bxg").addEventListener('tap', function(e) {
+				openmap();
+			});
+
+			getuserid("aa").addEventListener("tap", function(e) {
+				areaid = '3';
+				ajax(getadressUrl, areaid);
+			});
+			getuserid("bb").addEventListener("tap", function(e) {
+				areaid = '0';
+				ajax(getadressUrl, areaid);
+
+			});
+			getuserid("cc").addEventListener("tap", function(e) {
+				areaid = '2';
+				ajax(getadressUrl, areaid);
+
+			});
+			getuserid("dd").addEventListener("tap", function(e) {
+				areaid = '1';
+				ajax(getadressUrl, areaid);
+
+			});
+			getuserid("ee").addEventListener("tap", function(e) {
+				areaid = '4';
+				ajax(getadressUrl, areaid);
+
+			});
+			var ajax = function(url, aid) {
+
+				mui.getJSON(url, {
+					area: aid
+				}, success);
+				news.items.splice(0, news.items.length);
+			};
+			var success = function(rsp) { //获取到的数据
+				if(rsp.code == 200) {
+					news.items = news.items.concat(convert(rsp.data));
+				}
+			}
+
+			mui.plusReady(function() {
+				ajax(getadressUrl, 0);
+			});
+
+			var news = new Vue({
+				el: '#news',
+				data: {
+					items: [] //列表信息流数据
+				}
+			});
+
+			/**
+			 * 1、将服务端返回数据，转换成前端需要的格式
+			 * 2、若服务端返回格式和前端所需格式相同，则不需要改功能
+			 * 
+			 * @param {Array} items 
+			 */
+			function convert(items) {
+				var newItems = [];
+				items.forEach(function(item) {
+					newItems.push({
+						name: item.name,
+						longitude: item.longitude,
+						latitude: item.latitude,
+						amaplong: item.amaplong,
+						amaplat: item.amaplat
+					});
+				});
+				return newItems;
+			}
+		</script>
+
+	</body>
+
+</html>

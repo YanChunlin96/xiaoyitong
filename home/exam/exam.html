@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>考试查询</title>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style>
+			.mui-card {
+				font-size: 14px;
+				position: relative;
+				overflow: hidden;
+				margin: 0px;
+				border-radius: 2px;
+				background-color: #fff;
+				background-clip: padding-box;
+				box-shadow: 0 1px 2px rgba(0, 0, 0, .3)
+			}
+			
+			.mui-card-header {
+				position: relative;
+				display: -webkit-box;
+				min-height: 44px;
+				padding: 10px 15px;
+				-webkit-box-pack: justify;
+				-webkit-justify-content: space-between;
+				justify-content: space-between;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #00B8DA;height: 50px;">
+			<div style="margin-top: 3px;">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left" style="color: #FFFFFF;width: 35px;">
+					<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+				<h1 class="mui-title" style="color: #FFFFFF;left: 40px;right: 40px;font-size: 19px;">考试查询</h1>
+			</div>
+		</header>
+		<div style="margin-top: 50px;">
+			<div id="news">
+				<div id="refreshContainer">
+					<!--<ul class="mui-table-view mui-grid-view" style="height: 40px;">
+						<li class="mui-table-view-cell" style="background: #F8FDFF; width: 100%;height: 40px;" v-for="item in items">
+							<span class="mui-pull-left"><span style="height: 10px;background: #00B8DA;width: 5px;color: #00B8DA;">|</span>&nbsp;&nbsp;{{item.semester}}年第{{item.schoolYear}}学期考试安排</span>
+						</li>
+					</ul>-->
+					<ul class="mui-table-view mui-grid-view" style="height: 40px;">
+						<li id="showUserPicker1" class="mui-table-view-cell" style="background: #F8FDFF; width: 100%;height: 40px;color: #00B8DA;" v-for="item in items">
+							<span class="mui-pull-left" style="margin-left: 16%;">{{item.semester}}年第{{item.schoolYear}}学期考试安排</span>
+						</li>
+					</ul>
+					<div class="mui-card" v-for="item in items" style="margin-bottom: 2%;">
+						<div class="mui-card-header">
+							<span style="height: 10px;background: #00B8DA;width: 5px;color: #00B8DA;">|</span>&nbsp;&nbsp;
+							课程名称：{{item.courseName}}
+						</div>
+						<div class="mui-card-content">
+							<div class="mui-card-content-inner">
+								姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：{{stuName}}<br /> 学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：{{item.StuNo}}
+								<br /> 课程代码：{{item.courseCode}}
+								<br/> 考试地点：{{item.testRoom}}
+								<br/> 考试时间：{{item.testTime}}
+								<br/> 监考员 A：{{item.examinationOne}}
+								<br/> 监考员 B：{{item.examinationTwo}}
+								<br/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.plusReady(function() {
+				pullupRefresh();
+			});
+
+			function pullupRefresh() {
+				if(window.plus && plus.networkinfo.getCurrentType() === plus.networkinfo.CONNECTION_NONE) {
+					plus.nativeUI.toast('似乎已断开与互联网的连接', {
+						verticalAlign: 'top'
+					});
+					return;
+				}
+
+				mui.getJSON("http://47.92.82.112/public/index.php/exam/Index/getExamInfo", {
+					token: plus.storage.getItem("token")
+				}, function(rsp) {
+					if(rsp.code == 200) {
+						news.items = news.items.concat(convert(rsp.data.examInfo));
+						news.stuName = rsp.data.stuName;
+
+					} else {
+						mui.toast("查询失败！请稍后再试！");
+						return;
+					}
+				});
+
+			}
+
+			var news = new Vue({
+				el: '#news',
+				data: {
+					items: [], //列表信息流数据
+					stuName: ''
+				}
+			});
+
+			/**
+			 * 1、将服务端返回数据，转换成前端需要的格式
+			 * 2、若服务端返回格式和前端所需格式相同，则不需要改功能
+			 * 
+			 * @param {Array} items 
+			 */
+			function convert(items) {
+				var newItems = [];
+				items.forEach(function(item) {
+					newItems.push({
+						StuNo: item.StuNo, //学号
+						examinationOne: item.examinationOne == null ? '无' : item.examinationOne, //监考员A
+						examinationTwo: item.examinationTwo == null ? '无' : item.examinationTwo, //监考员B
+						courseName: item.courseName, //课程名称
+						courseCode: item.courseCode, //课程代码
+						testRoom: item.testRoom, //考试地点
+						testTime: item.testTime, //考试时间
+						semester: item.semester, //学年
+						schoolYear: item.schoolYear //学期
+					});
+				});
+				return newItems;
+			}
+		</script>
+	</body>
+
+</html>

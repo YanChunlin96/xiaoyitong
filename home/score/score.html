@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>成绩查询</title>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style>
+			.c1{
+				color: #FF0000;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #00B8DA;height: 50px;">
+			<div style="margin-top: 3px;">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left" style="color: #FFFFFF;width: 35px;">
+				<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+				<h1 class="mui-title" style="color: #FFFFFF;left: 40px;right: 40px;font-size: 19px;">成绩查询</h1>
+				<a id="menu" class="mui-pull-right mui-icon mui-icon-more" href="#topPopover" style="color: #FFFFFF;"></a>
+			</div>
+		</header>
+		<div class="mui-content" style="margin-top: 5px;">
+			<div id="news">
+				<div id="refreshContainer">
+					<ul class="mui-table-view mui-grid-view" style="height: 40px;">
+						<li id="showUserPicker1" class="mui-table-view-cell" style="background: #F8FDFF; width: 100%;height: 40px;color: #00B8DA;" v-for="item in items">
+							<span class="mui-pull-left" style="margin-left: 22%;">{{item.schoolYear}}第{{item.semester}}学期成绩</span>
+							<span class="mui-pull-right" style="margin-right: 2%;"></span>
+						</li>
+					</ul>
+
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell" style="">
+							<div style="font-size: 16px;">
+								<span style="height: 10px;background: #00B8DA;width: 5px;color: #00B8DA;">|</span>&nbsp;&nbsp;课程名称
+								<span class="mui-pull-right" style="margin-right: 10%;width: 10%;">成绩</span>
+							</div>
+						</li>
+						<li id="cj" class="mui-table-view-cell mui-collapse" v-for="item in items">
+							<a class="mui-navigate-right" href="#">
+								<div style="font-size: 16px;">
+									<span>{{item.courseName}}</span>
+									<span id="zzcj" class="mui-pull-right" style="margin-right: 7.5%;color: #66CC22;width: 10%;font-size: 14px;">
+										{{item.score}}
+									</span>
+								</div>
+							</a>
+							<div class="mui-collapse-content" style="font-size: 14px;background: #F8F8F8;">
+								<div>课程名称：{{item.courseName}}</div>
+								<div>课程性质：{{item.courseNature}}</div>
+								<div>学分：{{item.credit}}</div>
+								<div>绩点：{{item.mark}}</div>
+								<div id="zcj">成绩：{{item.score}}</div>
+								<div id="bcj">补考成绩：<span id="scj">{{item.makeupScore}}</span></div>
+							</div>
+
+						</li>
+					</ul>
+
+					<ul class="mui-table-view mui-grid-view">
+						<li id="showUserPicker1" class="mui-table-view-cell" style="background: #FFFFFF; width: 100%;height: 30px;">
+							<span class="mui-pull-left"><span style="height: 10px;background: #00B8DA;width: 5px;color: #00B8DA;">|</span>&nbsp;&nbsp;汇总</span>
+						</li>
+					</ul>
+					<ul class="mui-table-view" id="hz">
+						<li class="mui-table-view-cell">
+							<div style="font-size: 16px;margin-bottom: 5%;">
+								学年平均绩点
+								<span class="mui-pull-right mui-e" style="margin-right: 9%;width: 8.2%;font-size: 14px;">
+									{{schoolYear_mark}}
+								</span>
+							</div>
+							<div style="font-size: 16px;margin-bottom: 5%;">
+								学期平均绩点
+								<span class="mui-pull-right mui-e" style="margin-right: 9%;width: 8.2%;font-size: 14px;">
+									{{semester_mark}}
+								</span>
+							</div>
+							<div style="font-size: 16px;margin-bottom: 5%;">
+								目前平均绩点
+								<span class="mui-pull-right mui-e" style="margin-right: 9%;width: 8.2%;font-size: 14px;">
+									{{all_mark}}
+								</span>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="topPopover" class="mui-popover" style="height: 45%;width: 50%;" align="center">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li id="dy" class="mui-table-view-cell" value="2015-2016">
+							<a href="#" onclick="a()">2015-2016第1学期</a>
+						</li>
+						<li id="dyy" class="mui-table-view-cell" value="2015-2016">
+							<a href="#" onclick="b()">2015-2016第2学期</a>
+						</li>
+						<li id="de" class="mui-table-view-cell" value="2016-2017">
+							<a href="#" onclick="c()">2016-2017第1学期</a>
+						</li>
+						<li id="dee" class="mui-table-view-cell" value="2016-2017">
+							<a href="#" onclick="d()">2016-2017第2学期</a>
+						</li>
+						<li id="ds" class="mui-table-view-cell" value="2017-2018">
+							<a href="#" onclick="e()">2017-2018第1学期</a>
+						</li>
+						<li id="dss" class="mui-table-view-cell" value="2017-2018">
+							<a href="#" onclick="f()">2017-2018第2学期</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui('.mui-scroll-wrapper').scroll();
+			mui.plusReady(function(){
+				pullupRefresh();
+			});
+
+			function pullupRefresh() {
+				if(window.plus && plus.networkinfo.getCurrentType() === plus.networkinfo.CONNECTION_NONE) {
+					plus.nativeUI.toast('似乎已断开与互联网的连接', {
+						verticalAlign: 'top'
+					});
+					return;
+				}
+				mui.getJSON("http://47.92.82.112/public/index.php/score/Score/getScore?&schoolYear=&semester=", {
+					token: plus.storage.getItem("token")
+				}, function(rsp) {
+					console.log(plus.storage.getItem("token"))
+					if(rsp.code == 200 && rsp.data) {
+						news.items = news.items.concat(convert(rsp.data.scores));
+					} else {
+						return;
+					}
+				});
+
+				mui.getJSON("http://47.92.82.112/public/index.php/score/Score/getScore?&schoolYear=&semester=", {
+					token: plus.storage.getItem("token")
+				}, function(rsp) {
+					console.log(plus.storage.getItem("token"))
+					if(rsp.code == 200 && rsp.data) {
+						news.all_mark = rsp.data.mark.all_mark;
+						news.semester_mark = rsp.data.mark.semester_mark;
+						news.schoolYear_mark = rsp.data.mark.schoolYear_mark;
+					} else {
+						return;
+					}
+				});
+			}
+
+			var news = new Vue({
+				el: '#news',
+				data: {
+					items: [],
+					all_mark: '',
+					semester_mark: '',
+					schoolYear_mark: ''
+				}
+			});
+			/**
+			 * 1、将服务端返回数据，转换成前端需要的格式
+			 * 2、若服务端返回格式和前端所需格式相同，则不需要改功能
+			 * 
+			 * @param {Array} items 
+			 */
+			function convert(items) {
+				var newItems = [];
+				items.forEach(function(item) {
+					newItems.push({
+						courseName: item.courseName, //课程名称
+						score: item.score, //成绩
+						courseNature: item.courseNature, //课程性质
+						credit: item.credit, //学分
+						mark: item.mark, //绩点
+						makeupScore: item.makeupScore == null ? '无' : item.makeupScore, //补考
+						schoolYear: item.schoolYear, //学年
+						semester: item.semester //学期
+					});
+				});
+				return newItems;
+			}
+
+			//大一第1学期
+			function a() {
+				mui.getJSON("http://47.92.82.112/public/index.php/score/Score/getScore?&schoolYear=2015-2016&semester=1", {
+					token: plus.storage.getItem("token")
+				}, function(rsp) {
+					if(rsp.code == 217){
+						pullupRefresh();
+						alert("该学期暂无成绩！");
+					}
+					console.log(plus.storage.getItem("token"))
+					if(rsp.code == 200 && rsp.data) {
+						document.getElementById("hz").style.visibility = 'visible';
+						news.items = news.items.concat(convert(rsp.data.scores));
+						
+					} else {
+						
+						return;
+					}
+				});
+				mui.getJSON("http://47.92.82.112/public/index.php/score/Score/getScore?&schoolYear=2015-2016&semester=1", {
+					token: plus.storage.getItem("token")
+				}, function(rsp) {
+					console.log(plus.storage.getItem("token"))
+					if(rsp.code == 200 && rsp.data) {
+						news.all_mark = rsp.data.mark.all_mark;
+						news.semester_mark = rsp.data.mark.semester_mark;
+						news.schoolYear_mark = rsp.data.mark.schoolYear_mark;
+						
+					} else {
+						
+						return;
+					}
+				});
+				news.items.splice(0, news.items.length);
+				mui(".mui-popover").popover("toggle");
+			}
+			//大一第2学期
+			function b() {
+				mui.getJSON("http://47.92.82.112/public/index.php/score/Score/getScore?&schoolYear=2015-2016&semester=2", {
+					token: plus.storage.getItem("token")
+				}, function(rsp) {
+					if(rsp.code == 217){
+						pullupRefresh();
+						alert("该学期暂无成绩！");
+					}
+					console.log(plus.storage.getItem("token"))
+					if(rsp.code == 200 && rsp.data) {
+						document.getElementById("hz").style.visibility = 'visible';
+						news.items = news.items.concat(convert(rsp.data.scores));
+						
+					} else {
+						
+						return;
+					}
+				});
+				mui.getJSON("http://47.92.82.112/public/index.php/score/Score/getScore?&schoolYear=2015-2016&semester=2", {
+					token: plus.storage.getItem("token")
+				}, function(rsp) {
+					console.log(plus.storage.getItem("token"))
+					if(rsp.code == 200 && rsp.data) {
+						news.all_mark = rsp.data.mark.all_mark;
+						news.semester_mark = rsp.data.mark.semester_mark;
+						news.schoolYear_mark = rsp.data.mark.schoolYear_mark;
+						
+					} else {
+						
+						return;
+					}
+				});
+				news.items.splice(0, news.items.length);
+				mui(".mui-popover").popover("toggle");
+			}
+			//大二第1学期
+			function c() {
+				mui.getJSON("http://47.92.82.112/public/index.php/score/Score/getScore?&schoolYear=2016-2017&semester=1", {
+					token: plus.storage.getItem("token")
+				}, function(rsp) {
+					if(rsp.code == 217){
+						pullupRefresh();
+						alert("该学期暂无成绩！");
+					}
+					console.log(plus.storage.getItem("token"))
+					if(rsp.code == 200 && rsp.data) {
+						document.getElementById("hz").style.visibility = 'visible';
+						news.items = news.items.concat(convert(rsp.data.scores));
+						
+					} else {
+						
+						return;
+					}
+				});
+				mui.getJSON("http://47.92.82.112/public/index.php/score/Score/getScore?&schoolYear=2016-2017&semester=1", {
+					token: plus.storage.getItem("token")
+				}, function(rsp) {
+					console.log(plus.storage.getItem("token"))
+					if(rsp.code == 200 && rsp.data) {
+						news.all_mark = rsp.data.mark.all_mark;
+						news.semester_mark = rsp.data.mark.semester_mark;
+						news.schoolYear_mark = rsp.data.mark.schoolYear_mark;
+						
+					} else {
+						
+						return;
+					}
+				});
+				news.items.splice(0, news.items.length);
+				mui(".mui-popover").popover("toggle");
+			}
+			//大二第2学期
+			function d() {
+				mui.getJSON("http://47.92.82.112/public/index.php/score/Score/getScore?&schoolYear=2016-2017&semester=2", {
+					token: plus.storage.getItem("token")
+				}, function(rsp) {
+					if(rsp.code == 217){
+						pullupRefresh();
+						alert("该学期暂无成绩！");
+					}
+					console.log(plus.storage.getItem("token"))
+					if(rsp.code == 200 && rsp.data) {
+						document.getElementById("hz").style.visibility = 'visible';
+						news.items = news.items.concat(convert(rsp.data.scores));
+						
+					} else {
+						
+						return;
+					}
+				});
+				mui.getJSON("http://47.92.82.112/public/index.php/score/Score/getScore?&schoolYear=2016-2017&semester=2", {
+					token: plus.storage.getItem("token")
+				}, function(rsp) {
+					console.log(plus.storage.getItem("token"))
+					if(rsp.code == 200 && rsp.data) {
+						news.all_mark = rsp.data.mark.all_mark;
+						news.semester_mark = rsp.data.mark.semester_mark;
+						news.schoolYear_mark = rsp.data.mark.schoolYear_mark;
+						
+					} else {
+						
+						return;
+					}
+				});
+				news.items.splice(0, news.items.length);
+				mui(".mui-popover").popover("toggle");
+			}
+			//大三第1学期
+			function e() {
+				mui.getJSON("http://47.92.82.112/public/index.php/score/Score/getScore?&schoolYear=2017-2018&semester=1", {
+					token: plus.storage.getItem("token")
+				}, function(rsp) {
+					if(rsp.code == 217){
+						pullupRefresh();
+						alert("该学期暂无成绩！");
+					}
+					console.log(plus.storage.getItem("token"))
+					if(rsp.code == 200 && rsp.data) {
+						document.getElementById("hz").style.visibility = 'visible';
+						news.items = news.items.concat(convert(rsp.data.scores));
+						
+					} else {
+						
+						return;
+					}
+				});
+				mui.getJSON("http://47.92.82.112/public/index.php/score/Score/getScore?&schoolYear=2017-2018&semester=1", {
+					token: plus.storage.getItem("token")
+				}, function(rsp) {
+					console.log(plus.storage.getItem("token"))
+					if(rsp.code == 200 && rsp.data) {
+						news.all_mark = rsp.data.mark.all_mark;
+						news.semester_mark = rsp.data.mark.semester_mark;
+						news.schoolYear_mark = rsp.data.mark.schoolYear_mark;
+						
+					} else {
+						
+						return;
+					}
+				});
+				news.items.splice(0, news.items.length);
+				mui(".mui-popover").popover("toggle");
+			}
+			//大三第2学期
+			function f() {
+				mui.getJSON("http://47.92.82.112/public/index.php/score/Score/getScore?&schoolYear=2017-2018&semester=2", {
+					token: plus.storage.getItem("token")
+				}, function(rsp) {
+					if(rsp.code == 217){
+						pullupRefresh();
+						alert("该学期暂无成绩！");
+					}
+					console.log(plus.storage.getItem("token"))
+					if(rsp.code == 200 && rsp.data) {
+						document.getElementById("hz").style.visibility = 'visible';
+						news.items = news.items.concat(convert(rsp.data.scores));
+						
+					} else {
+						
+						return;
+					}
+				});
+				mui.getJSON("http://47.92.82.112/public/index.php/score/Score/getScore?&schoolYear=2017-2018&semester=2", {
+					token: plus.storage.getItem("token")
+				}, function(rsp) {
+					console.log(plus.storage.getItem("token"))
+					if(rsp.code == 200 && rsp.data) {
+						news.all_mark = rsp.data.mark.all_mark;
+						news.semester_mark = rsp.data.mark.semester_mark;
+						news.schoolYear_mark = rsp.data.mark.schoolYear_mark;
+						
+					} else {
+						
+						return;
+					}
+				});
+				news.items.splice(0, news.items.length);
+				mui(".mui-popover").popover("toggle");
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>活动详情</title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style>
+			.nr {
+				display: -webkit-box;
+				overflow: hidden;
+				white-space: normal!important;
+				text-overflow: ellipsis;
+				word-wrap: break-word;
+				-webkit-line-clamp: 10;
+				-webkit-box-orient: vertical
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #00B8DA;height: 50px;">
+			<div style="margin-top: 3px;">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left" style="color: #FFFFFF;">
+					<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+				<h1 class="mui-title" style="color: #FFFFFF;left: 40px;right: 40px;font-size: 19px;">活动详情</h1>
+			</div>
+		</header>
+		<div class="mui-content" style="padding-bottom: 200px;">
+			<div>
+				<img src="../images/jy.jpg" width="100%" height="160" />
+			</div>
+			<ul class="mui-table-view mui-grid-view">
+				<li id="showUserPicker1" class="mui-table-view-cell" style="background: #FFFFFF; width: 100%;height: 30px;">
+					<span>{{eventName}}</span>
+				</li>
+			</ul>
+			<ul class="mui-table-view mui-grid-view">
+				<li class="mui-table-view-cell" style=" width: 33.33333%;height: 80px;">
+					<div style="margin-top: 12px;">
+						<div style="color: #FF6113;font-size: 15px;">{{eventState}}</div>
+						<div style="margin-top: 3px;">活动状态</div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell" style=" width: 33.33333%;height: 80px;">
+					<div style="margin-top: 12px;">
+						<div style="color: #00B8DA;font-size: 15px;">{{eventScore}}</div>
+						<div style="margin-top: 3px;">活动分值</div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell" style=" width: 33.33333%;height: 80px;">
+					<div style="margin-top: 12px;">
+						<div style="color: #ACACB4;font-size: 15px;">{{peopleNumber}}</div>
+						<div style="margin-top: 3px;">参与人数</div>
+					</div>
+				</li>
+			</ul>
+			<ul class="mui-table-view mui-grid-view" style="margin-top: 10px;">
+				<li id="showUserPicker1" class="mui-table-view-cell" style="background: #FFFFFF; width: 100%;height: 30px;">
+					<span class="mui-pull-left"><span style="height: 10px;background: #00B8DA;width: 5px;color: #00B8DA;">|</span>&nbsp;&nbsp;活动基本信息</span>
+				</li>
+			</ul>
+			<ul class="mui-table-view">
+				<li id="showUserPicker1" class="mui-table-view-cell" style="background: #FFFFFF; width: 100%;">
+					<span class="mui-pull-left" style="margin-left: 12px;">
+						<div>活动时间：<span style="color: #ACACB4;">{{eventStartTime}}~{{eventEndTime}}</span></div>
+		<div style="margin-top: 10px;">活动地点：<span style="color: #ACACB4;">{{eventPlace}}</span></div>
+		<div style="margin-top: 10px;">活动类型：<span style="color: #ACACB4;">{{eventType}}</span></div>
+		</span>
+		</li>
+		</ul>
+		<ul class="mui-table-view mui-grid-view" style="margin-top: 10px;">
+			<li id="showUserPicker1" class="mui-table-view-cell" style="background: #FFFFFF; width: 100%;height: 30px;">
+				<span class="mui-pull-left"><span style="height: 10px;background: #00B8DA;width: 5px;color: #00B8DA;">|</span>&nbsp;&nbsp;发起信息</span>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li id="showUserPicker1" class="mui-table-view-cell" style="background: #FFFFFF; width: 100%;">
+				<span class="mui-pull-left" style="margin-left: 12px;">
+						<div style="margin-top: 5px;">负责部门：<span style="color: #ACACB4;">{{eventCompany}}</span></div>
+				</span>
+			</li>
+		</ul>
+		<ul class="mui-table-view mui-grid-view" style="margin-top: 10px;">
+			<li id="showUserPicker1" class="mui-table-view-cell" style="background: #FFFFFF; width: 100%;height: 30px;">
+				<span class="mui-pull-left"><span style="height: 10px;background: #00B8DA;width: 5px;color: #00B8DA;">|</span>&nbsp;&nbsp;活动流程</span>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li id="showUserPicker1" class="mui-table-view-cell" style="background: #FFFFFF; width: 100%;">
+				<p class="nr">
+					{{eventProcess}}
+				</p>
+			</li>
+		</ul>
+		<ul class="mui-table-view mui-grid-view" style="margin-top: 10px;">
+			<li id="showUserPicker1" class="mui-table-view-cell" style="background: #FFFFFF; width: 100%;height: 30px;">
+				<span class="mui-pull-left"><span style="height: 10px;background: #00B8DA;width: 5px;color: #00B8DA;">|</span>&nbsp;&nbsp;活动内容</span>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li id="showUserPicker1" class="mui-table-view-cell" style="background: #FFFFFF; width: 100%;">
+				<p class="nr">
+					{{eventContent}}
+				</p>
+			</li>
+		</ul>
+
+		</div>
+		<nav class="mui-bar mui-bar-tab" style="background-color:#000000; background-color:rgba(0,0,0,0.2);">
+			<div class="mui-tab-item mui-active">
+
+				<button id="check_in" style="width: 100px;background: #00B8DA;"><span style="font-size: 18px;color: #FFFFFF;">签到</span></button>
+
+			</div>
+		</nav>
+		<script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/userjs.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var score;
+			var guid;
+
+			function getDefaultData() {
+				return {
+					eventName: '',
+					eventState: '',
+					eventScore: '',
+					eventType: '',
+					eventStartTime: '',
+					eventEndTime: '',
+					eventPlace: '',
+					eventContent: '',
+					peopleNumber: '',
+					eventCompany: '',
+					eventProcess: ''
+				}
+			}
+
+			var vm = new Vue({
+				el: '.mui-content',
+				data: getDefaultData(),
+
+			});
+
+			var islogin = function(id, url) {
+				var wt = plus.nativeUI.showWaiting();
+				if(plus.storage.getItem("token") != null) {
+				//	alert(plus.storage.getItem("token"));
+					mui.getJSON(isLoginUrl, {
+						token: plus.storage.getItem("token")
+					}, function(response) {
+						wt.close();
+						if(response.code == "200") {
+							if(response.data.result == 'true') {
+								ajax(jgtbindUrl, {
+									token: plus.storage.getItem("token")
+								}, 'jgtbind', id, url);
+								//	openwindows(id, url);
+							} else if(response.data.result == 'false') {
+								mui.toast("登录已过期，请重新登陆");
+								openwindows("login", "../mine/login/newlogin.html");
+							}
+						} else if(response.code == 217) {
+							mui.toast("系统繁忙，请稍后重试");
+						} else if(response.code == 215) {
+							mui.toast("系统繁忙，请稍后重试");
+						} else {
+							mui.toast(response.msg);
+						}
+					});
+				} else {
+					wt.close();
+					mui.toast("您还未登录");
+					openwindows("login", "../mine/login/newlogin.html");
+				}
+			};
+
+			function ajax(url, data, id, pageid, pageurl) {
+				if(id == 'jgtbind') {
+					mui.getJSON(url, data, function(response) { //响应成功
+						if(response.code == 200) {
+							if(response.data.result == 'true') {
+								mui.openWindow({
+									url: pageurl,
+									id: pageid,
+									extras: {
+										guid: guid,
+										score: score
+									},
+									show: {
+										aniShow: 'slide-in-right',
+										duration: 400
+									},
+									waiting: {
+										autoShow: false
+									}
+								});
+							} else if(response.data.result == 'false') {
+								mui.toast("您还未绑定信息");
+								openwindows("bind", "../mine/login/bind.html");
+							}
+						} else if(response.code == 217) {
+							mui.toast("系统繁忙，请稍后重试 ");
+						} else if(response.code == 215) {
+							mui.toast("系统繁忙，请稍后重试 ");
+						} else {
+							mui.toast(response.msg);
+						}
+					});
+				}
+			}
+
+			getuserid("check_in").addEventListener('tap', function(event) {
+				islogin('check_in', 'check_in.html');
+			});
+
+			//监听自定义事件，获取新闻详情
+			document.addEventListener('get_detail', function(event) {
+				guid = event.detail.guid;
+				if(!guid) {
+					vm.eventName = event.detail.eventName;
+					vm.eventState = event.detail.eventState;
+					vm.eventScore = event.detail.eventScore;
+				}
+				//向服务端请求文章详情内容
+				mui.ajax('http://47.92.82.112/public/index.php/szcp/Myevents/getEventDetails?eventId=' + guid, {
+					type: 'GET',
+					dataType: 'json', //服务器返回json格式数据
+					timeout: 15000, //15秒超时
+					success: function(rsp) {
+						vm.eventName = rsp.data.eventDetails.eventName; //活动名称
+						vm.eventState = rsp.data.eventDetails.eventState; //活动状态
+						vm.eventStartTime = rsp.data.eventDetails.eventStartTime; //活动开始时间
+						vm.eventEndTime = rsp.data.eventDetails.eventEndTime; //活动结束时间
+						vm.eventPlace = rsp.data.eventDetails.eventPlace; //活动地点
+						vm.eventScore = rsp.data.eventDetails.eventScore; //活动分值
+						score = rsp.data.eventDetails.eventScore;
+						vm.eventContent = rsp.data.eventDetails.eventContent; //活动内容
+						vm.eventType = rsp.data.eventDetails.eventType; //活动类型
+						vm.peopleNumber = rsp.data.eventDetails.peopleNumber; //参与人数
+						vm.eventCompany = rsp.data.eventDetails.eventCompany; //负责部门
+						vm.eventProcess = rsp.data.eventDetails.eventProcess; //活动流程
+					},
+
+					error: function(xhr, type, errorThrown) {
+						mui.toast('获取活动内容失败');
+						//TODO 此处可以向服务端告警
+
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

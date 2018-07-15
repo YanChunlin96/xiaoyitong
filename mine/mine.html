@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css" />
+		<style>
+			.mui-views,
+			.mui-view,
+			.mui-pages,
+			.mui-page,
+			.mui-page-content {
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				width: 100%;
+				height: 100%;
+				background-color: #efeff4;
+			}
+			
+			.mui-pages {
+				top: 46px;
+				height: auto;
+			}
+			
+			.mui-scroll-wrapper,
+			.mui-scroll {
+				background-color: #efeff4;
+			}
+			
+			.mui-page.mui-transitioning {
+				-webkit-transition: -webkit-transform 300ms ease;
+				transition: transform 300ms ease;
+			}
+			
+			.mui-page-left {
+				-webkit-transform: translate3d(0, 0, 0);
+				transform: translate3d(0, 0, 0);
+			}
+			
+			.mui-ios .mui-page-left {
+				-webkit-transform: translate3d(-20%, 0, 0);
+				transform: translate3d(-20%, 0, 0);
+			}
+			
+			.mui-navbar {
+				position: fixed;
+				right: 0;
+				left: 0;
+				z-index: 10;
+				height: 44px;
+				background-color: #f7f7f8;
+			}
+			
+			.mui-navbar .mui-bar {
+				position: absolute;
+				background: transparent;
+				text-align: center;
+			}
+			
+			.mui-android .mui-navbar-inner.mui-navbar-left {
+				opacity: 0;
+			}
+			
+			.mui-ios .mui-navbar-left .mui-left,
+			.mui-ios .mui-navbar-left .mui-center,
+			.mui-ios .mui-navbar-left .mui-right {
+				opacity: 0;
+			}
+			
+			.mui-navbar .mui-btn-nav {
+				-webkit-transition: none;
+				transition: none;
+				-webkit-transition-duration: .0s;
+				transition-duration: .0s;
+			}
+			
+			.mui-navbar .mui-bar .mui-title {
+				display: inline-block;
+				width: auto;
+			}
+			
+			.mui-page-shadow {
+				position: absolute;
+				right: 100%;
+				top: 0;
+				width: 16px;
+				height: 100%;
+				z-index: -1;
+				content: '';
+			}
+			
+			.mui-page-shadow {
+				background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, .01) 50%, rgba(0, 0, 0, .2) 100%);
+				background: linear-gradient(to right, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, .01) 50%, rgba(0, 0, 0, .2) 100%);
+			}
+			
+			.mui-navbar-inner.mui-transitioning,
+			.mui-navbar-inner .mui-transitioning {
+				-webkit-transition: opacity 300ms ease, -webkit-transform 300ms ease;
+				transition: opacity 300ms ease, transform 300ms ease;
+			}
+			
+			.mui-page {
+				display: none;
+			}
+			
+			.mui-pages .mui-page {
+				display: block;
+			}
+			
+			.mui-page .mui-table-view:first-child {
+				margin-top: 15px;
+			}
+			
+			.mui-page .mui-table-view:last-child {
+				margin-bottom: 30px;
+			}
+			
+			.mui-table-view span.mui-pull-right {
+				color: #999;
+			}
+			
+			.mui-table-view-divider {
+				background-color: #efeff4;
+				font-size: 14px;
+			}
+			
+			.mui-table-view-divider:before,
+			.mui-table-view-divider:after {
+				height: 0;
+			}
+			
+			.head {
+				height: 40px;
+			}
+			
+			#head {
+				line-height: 40px;
+			}
+			
+			.head-img {
+				width: 40px;
+				height: 40px;
+			}
+			
+			#head-img1 {
+				position: absolute;
+				bottom: 10px;
+				right: 40px;
+				width: 40px;
+				height: 40px;
+			}
+			
+			.update {
+				font-style: normal;
+				color: #999999;
+				margin-right: -25px;
+				font-size: 15px
+			}
+			
+			.mui-fullscreen {
+				position: fixed;
+				z-index: 20;
+				background-color: #000;
+			}
+			
+			.mui-ios .mui-navbar .mui-bar .mui-title {
+				position: static;
+			}
+			/*意见反馈在setting页面单独的css*/
+			
+			#feedback .mui-popover {
+				position: fixed;
+			}
+			
+			#feedback .mui-table-view:last-child {
+				margin-bottom: 0px;
+			}
+			
+			#feedback .mui-table-view:first-child {
+				margin-top: 0px;
+			}
+		</style>
+	</head>
+
+	<body style="background-color: #F9F9FB;">
+		<div style="padding-bottom: 50px;">
+			<div id="news">
+				<div id="refreshContainer">
+					<ul class="mui-table-view" id="hasLogin">
+						<li class="mui-table-view-cell" id="personmsg">
+							<a class="mui-navigate-right">
+								<img class="mui-pull-left" id="head-img" :src="photoPath" width="85px" height="85px" style="border-radius: 50%;margin-top: 1%;margin-bottom: 1%;margin-left: 1%;margin-right: 8%;">
+								<div class="mui-media-body">
+									<p class='mui-ellipsis' style="font-size: 14px;color: #333333;margin-top: 10%;">
+										昵称：{{pickName}}
+									</p>
+									<p class='mui-ellipsis' style="font-size: 14px;color: #333333;margin-top: 5%;">
+										签名：{{introduce}}
+									</p>
+								</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!--<ul class="mui-table-view" id="notLogin">
+				<li class="mui-table-view-cell mui-media" id="login">
+					<a class="mui-navigate-right">
+						<img class="mui-pull-left" id="head-img" src="../images/svtcc.jpg" width="16%" style="border-radius: 50%;margin-top: 1%;margin-bottom: 1%;margin-right: 10%;">
+						<div style="margin-top: 6%;font-size: 16px;color: #333333;">
+							登录/注册
+						</div>
+					</a>
+				</li>
+			</ul> -->
+			<ul class="mui-table-view mui-table-view-chevron" style="margin-top: 3%;">
+				<li class="mui-table-view-cell" id="hd">
+					<a class="mui-navigate-right">
+						<img class="mui-pull-left" src="../images/hdjl.png" width="22px" height="22px" style="margin-left: 2px;">
+						<div style="margin-left: 15%;margin-top: 1%;font-size: 14px;color: #333333;">
+							活动记录
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media" id="update">
+					<a class="mui-navigate-right">
+						<img class="mui-pull-left" src="../images/gx.png" width="25px" height="25px">
+						<div style="margin-left: 15%;margin-top: 1%;font-size: 14px;color: #333333;">
+							检查更新
+						</div>
+						<span id="updatebage" class="mui-badge mui-badge-danger" style="visibility: hidden;">1</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media" onclick="onPlusReady()">
+					<a class="mui-navigate-right">
+						<img class="mui-pull-left" src="../images/ql.png" width="25px" height="25px">
+						<div style="margin-left: 15%;margin-top: 1%;font-size: 14px;color: #333333;">
+							缓存清理<i id="hc" class="mui-pull-right update"></i>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media" id="opinion">
+					<a class="mui-navigate-right">
+						<img class="mui-pull-left" src="../images/yj.png" width="25px" height="25px">
+						<div style="margin-left: 15%;margin-top: 1%;font-size: 14px;color: #333333;">
+							意见反馈
+						</div>
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view mui-table-view-chevron" style="margin-top: 4%;">
+				<li class="mui-table-view-cell mui-media" id="about">
+					<a class="mui-navigate-right">
+						<img class="mui-pull-left" src="../images/per06.png" width="25px" height="25px">
+						<div style="margin-left: 15%;margin-top: 1%;font-size: 14px;color: #333333;">
+							关于我们
+						</div>
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 8%;" id="signout" style="visibility: hidden;">
+				<li class="mui-table-view-cell" style="text-align: center;font-size: 16px;color: #333333;">
+					<a style="">
+						退出登录
+					</a>
+				</li>
+			</ul>
+		</div>
+		<script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/userjs.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			// 扩展API加载完毕后调用onPlusReady回调函数 
+			window.addEventListener('minreload', function(e) { //执行刷新
+				location.reload(true);
+			});
+
+			function ajaxupdata(id) {
+				mui.getJSON(updataUrl, {
+					'timestamp': timest()
+				}, function(rsp) { //plus.runtime.version
+					if(rsp.code == 200) {
+						if(id == 'tap') {
+							if(rsp.data.version != versionId) {
+								getuserid("updatebage").style.visibility = "visible";
+								plus.ui.confirm('有新版本更新', function(i) {
+									if(i.index == 0) {
+										plus.runtime.openURL(ip + rsp.data.downUrl);
+									}
+								}, "是否更新", ["立即更新", "取消"]);
+							} else {
+								getuserid("updatebage").style.visibility = "hidden";
+
+								mui.toast('校易通 已是最新版本~');
+							}
+						} else if("come") {
+							if(rsp.data.version != versionId) {
+								getuserid("updatebage").style.visibility = "visible";
+							} else {
+								getuserid("updatebage").style.visibility = "hidden";
+							}
+						}
+					} else {
+						mui.toast('请检查网络连接');
+					}
+				});
+			}
+			ajaxupdata("come");
+			var network = true; //网路判断 //网路判断
+			var wt;
+
+			mui.plusReady(function() {
+				pullupRefresh();
+			});
+			var signout = function() {
+				var btnArray = ['否', '是'];
+				mui.confirm('确认注销登录', '您确定退出登录', btnArray, function(e) {
+					if(e.index == 1) {
+						mui.getJSON(signoutUrl, {
+							token: plus.storage.getItem("token")
+						}, function(respones) {
+							if(respones.code == 200) {
+								mui.toast(respones.msg);
+								location.reload(true);
+							}
+						});
+						plus.storage.removeItem("token");
+					} else if(e.index == 2) {
+						location.reload(true);
+					}
+				});
+			}
+			var islogin = function() {
+				var wt = plus.nativeUI.showWaiting();
+				if(plus.storage.getItem("token") != null) {
+					mui.getJSON(isLoginUrl, {
+						token: plus.storage.getItem("token")
+					}, function(response) {
+						wt.close();
+						if(response.code == "200") {
+							if(response.data.result == 'true') {
+								signout();
+							} else if(response.data.result == 'false') {
+								mui.toast("登录已过期");
+								location.reload(true);
+							}
+						} else if(response.code == 217) {
+							mui.toast("系统繁忙，请稍后重试");
+						} else if(response.code == 215) {
+							mui.toast("系统繁忙，请稍后重试");
+						} else {
+							mui.toast(response.msg);
+						}
+					});
+				} else {
+					wt.close();
+					openwindows("login", "../mine/login/newlogin.html");
+				}
+			};
+
+			function pullupRefresh() {
+				if(window.plus && plus.networkinfo.getCurrentType() === plus.networkinfo.CONNECTION_NONE) {
+					plus.nativeUI.toast('似乎已断开与互联网的连接', {
+						verticalAlign: 'top'
+					});
+					return;
+				}
+
+				mui.getJSON("http://47.92.82.112/public/index.php/user/showInfo/showInfo", {
+					token: plus.storage.getItem("token")
+				}, function(rsp) {
+					console.log(plus.storage.getItem("token"));
+					if(rsp.code == 200 && rsp.data) {
+						if(rsp.data.photoPath == 'http://47.92.82.112/public/UserPhoto/') {
+							document.getElementById("head-img").src = '../images/svtcc.jpg';
+						} else {
+							news.photoPath = rsp.data.photoPath;
+							news.pickName = rsp.data.pickName;
+							news.introduce = rsp.data.introduce;
+							news.gender = rsp.data.gender;
+							news.birthday = rsp.data.birthday;
+							news.age = rsp.data.age;
+						}
+
+					} else {
+
+						return;
+					}
+				});
+			}
+			var news = new Vue({
+				el: '#news',
+				data: {
+					photoPath: '' == '' ? '../images/svtcc.jpg' : photoPath, //头像
+					pickName: '' == '' ? '请设置' : pickName, //昵称
+					introduce: '' == '' ? '请设置' : introduce, //签名
+					gender: '' == '' ? '请设置' : gender, //性别
+					birthday: '' == '' ? '请设置' : birthday, //出生日期
+					age: '' == '' ? '请设置' : age
+				}
+			});
+
+			if(mui.os.plus) { //测试是否联网
+				mui.plusReady(function() {
+					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+						network = false;
+					}
+					if(network) { //请求数据
+						getuserid("signout").style.visibility = "hidden";
+						var notloginhtml = '<li class="mui-table-view-cell mui-media" id="login"> <a class = "mui-navigate-right" ><img class = "mui-pull-left" id = "head-img" src = "../images/svtcc.jpg" width = "16%"  style = "border-radius: 50%;margin-top: 1%;margin-bottom: 1%;margin-right: 10%;" > <div style = "margin-top: 6%;font-size: 16px;color: #333333;" > 登录 / 注册 </div> </a> </li>';
+						//var isloginhtml = '<li class="mui-table-view-cell" id="personmsg"> <a class="mui-navigate-right"> <img class="mui-pull-left" id="head-img" :src="photoPath" width="30%" style="border-radius: 50%;margin-top: 1%;margin-bottom: 1%;margin-left: 5%;margin-right: 15%;"> <div class="mui-media-body">	<p class="mui-ellipsis" style="font-size: 14px;color: #333333;margin-top: 3%;">	昵称：{{pickName}}</p> <p class="mui-ellipsis" style="font-size: 14px;color: #333333;margin-top: 3%;">性别：{{gender}}</p><p class="mui-ellipsis" style="font-size: 14px;color: #333333;margin-top: 3%;">年龄：{{age}}</p>	<p class="mui-ellipsis" style="font-size: 14px;color: #333333;margin-top: 3%;">	签名：{{introduce}}</p></div>	</a></li>';
+						if(plus.storage.getItem("token") != null) {
+							mui.getJSON(isLoginUrl, {
+								token: plus.storage.getItem("token")
+							}, function(respones) {
+								if(respones.code == "200") {
+									if(respones.data.result == 'true') {
+										//getuserid("hasLogin").innerHTML = isloginhtml;
+										getuserid("signout").style.visibility = "visible";
+										document.getElementById("personmsg").addEventListener('tap', function(e) {
+											openwindows("personmsg", "personmsg/personmsg.html");
+										});
+									} else {
+										getuserid("hasLogin").innerHTML = notloginhtml;
+										getuserid("signout").style.visibility = "hidden";
+										document.getElementById("login").addEventListener('tap', function(e) {
+											openwindows("login", "login/newlogin.html");
+										});
+									}
+								}
+							});
+
+						} else {
+							getuserid("hasLogin").innerHTML = notloginhtml;
+							getuserid("login").addEventListener('tap', function(e) {
+								openwindows("login", "login/newlogin.html");
+							});
+						}
+
+					} else {
+						mui.toast("当前网络不给力，请稍后再试");
+					}
+
+				});
+			}
+
+			//我的活动
+			document.getElementById("hd").addEventListener('tap', function(e) {
+				var wt = plus.nativeUI.showWaiting();
+				if(plus.storage.getItem("token") != null) {
+					mui.getJSON(isLoginUrl, {
+						token: plus.storage.getItem("token")
+					}, function(response) {
+						wt.close();
+						if(response.code == "200") {
+							if(response.data.result == 'true') {
+								openwindows("activity", "activity/my_activity.html");
+							} else if(response.data.result == 'false') {
+								mui.toast("登录已过期，请重新登陆");
+								openwindows("login", "login/newlogin.html");
+							}
+						} else if(response.code == 217) {
+							mui.toast("系统繁忙，请稍后重试");
+						} else if(response.code == 215) {
+							mui.toast("系统繁忙，请稍后重试");
+						} else {
+							mui.toast(response.msg);
+						}
+					});
+				} else {
+					wt.close();
+					openwindows("login", "login/newlogin.html");
+				}
+
+			});
+			//意见反馈
+			document.getElementById("opinion").addEventListener('tap', function(e) {
+				var wt = plus.nativeUI.showWaiting();
+				if(plus.storage.getItem("token") != null) {
+					mui.getJSON(isLoginUrl, {
+						token: plus.storage.getItem("token")
+					}, function(response) {
+						wt.close();
+						if(response.code == "200") {
+							if(response.data.result == 'true') {
+								openwindows("opinion", "opinion/opinion.html");
+							} else if(response.data.result == 'false') {
+								mui.toast("登录已过期，请重新登陆");
+								openwindows("login", "login/newlogin.html");
+								mui.toast("请您先登录账号");
+							}
+						} else if(response.code == 217) {
+							mui.toast("系统繁忙，请稍后重试");
+						} else if(response.code == 215) {
+							mui.toast("系统繁忙，请稍后重试");
+						} else {
+							mui.toast(response.msg);
+						}
+					});
+				} else {
+					wt.close();
+					openwindows("login", "login/newlogin.html");
+				}
+			});
+			//关于我们
+			document.getElementById("about").addEventListener('tap', function(e) {
+				mui.openWindow({
+					id: 'about',
+					url: 'about/about.html',
+					show: {
+						aniShow: 'slide-in-right',
+						duration: 300
+					},
+					waiting: {
+						autoShow: false
+					}
+				});
+			});
+			//检查更新
+			document.getElementById("update").addEventListener('tap', function() {
+				ajaxupdata("tap");
+			});
+			
+
+			var r = null;
+			// 扩展API加载完毕，现在可以正常调用扩展API 
+			function onPlusReady() {
+				plus.cache.clear(function() {
+					alert("清除应用程序缓存成功！");
+				});
+			}
+
+			document.getElementById("signout").addEventListener('tap', function(e) {
+				islogin();
+			});
+			 
+
+			function timest() {
+				var tmp = Date.parse(new Date()).toString();
+				tmp = tmp.substr(0, 10);
+				return tmp;
+			}
+		</script>
+	</body>
+
+</html>

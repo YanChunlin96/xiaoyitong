@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>登录</title>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #00B8DA;height: 50px;">
+			<div style="margin-top: 3px;">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left" style="color: #FFFFFF;width: 35px;">
+					<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+				<h1 class="mui-title" style="color: #FFFFFF;left: 40px;right: 40px;font-size: 19px;">用户登录</h1>
+			</div>
+		</header>
+		<div class="headImg">
+			<div class="touxiang" align="center" style="padding-bottom: 4%;">
+				<img src="../../images/xyt.png" width="20%" height="20%" style="margin-top: 20%;" />
+				<div class='mui-ellipsis' style="color: #858585;margin-top: 10%;width: 70%; font-size: 18px; ">您 &nbsp;&nbsp; 的 &nbsp;&nbsp;校&nbsp;&nbsp;园&nbsp;&nbsp;好 &nbsp;&nbsp;帮 &nbsp;&nbsp;手</div>
+			</div>
+		</div>
+		<div style="margin-top: 10%; ">
+			<div>
+				<div id="item1mobile" align="center">
+					<div class="mui-input-row mui-input-group " style="  width: 90%;background-color:rgba(0,0,0,0);height: 40px;">
+						<label style="width: 15%; "><span class="mui-icon mui-icon-person" style="margin-top: -5px;margin-left: -60%;color: #858585;"></span></label>
+						<input id='loginphoneNum' type="text" maxlength="11" class="mui-input-clear mui-input mui-pull-left" placeholder="请输入手机号" style="font-size:14px; width: 78%;float: left; ">
+					</div>
+
+					<div class="mui-input-row mui-password mui-input-group " style="  width: 90%;background-color:rgba(0,0,0,0);height: 40px;">
+						<label style="width: 15%; "><span class="mui-icon mui-icon-locked" style="margin-top: -5px; margin-left: -60%;color: #858585;"></span></label>
+						<input type="password" id="password" maxlength="16" class="mui-input-password" placeholder="请输入密码" style="font-size:14px; width: 78%;float: left;-ms-inp { color:##0062CC; };margin-top: 2px;">
+					</div>
+
+					<div class="mui-content-padded" style=" color: #FFFFFF;margin-top: 11%; ">
+						<button id='login' class="mui-btn mui-btn-block mui-btn-primary" style="border: 0px; background-color: #2a83ee;width: 95%;;height: 40px;padding-top:8px; ">登录</button>
+						<div class="link-area" style="width: 95%;font-size: 15px; ">
+							<u><a id='forgetPassword' class="mui-pull-left" style="color: #2a83ee;">忘记密码?</a></u>
+							<u><a id='regist' class="mui-pull-right" style="color: #2a83ee; ">新用户注册</a></u>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<script src="../../js/userjs.js "></script>
+		<script src="../../js/common.js " type="text/javascript "></script>
+		<script src="js/app.js "></script>
+		<script>
+			var network; //网路判断 //网路判断
+			var wt;
+			var page;
+			mui.plusReady(function() {
+				//获取当前窗体对象
+				var self = plus.webview.currentWebview();
+				//接受上一页面传过来的值；
+				page = self.page;
+			});
+
+			function nettest() {
+				//测试是否联网
+				if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+					network = false;
+					wt.close();
+					mui.toast("当前网络不给力，请稍后再试");
+				} else {
+					network = true;
+				}
+				return network;
+			}
+
+			function bind(jpt) {
+				wt.close();
+				if(jpt == 'false') {
+					var btnArray = ['否', '是'];
+					mui.confirm('请问您是否需要绑定数据？', '是否绑定数据', btnArray, function(e) {
+						if(e.index == 1) {
+							mui.plusReady(function() {　
+								//触发父页面的自定义事件(refresh),从而进行刷新
+								mui.fire(plus.webview.getWebviewById("mine/mine.html"), 'minreload');
+								//返回true,继续页面关闭逻辑
+								return true;
+							});
+							openwindows("bind ", "bind.html");
+							 
+							
+							
+						} else {
+							mui.plusReady(function() {　
+								//触发父页面的自定义事件(refresh),从而进行刷新
+								mui.fire(plus.webview.getWebviewById("mine/mine.html"), 'minreload');
+								//返回true,继续页面关闭逻辑
+								return true;
+							});
+							var curr = plus.webview.currentWebview();
+							mui.back();
+							curr.close();
+						}
+					});
+				} else {
+					//openwindows("index", "../../index.html ");
+					if(page == 'mdfpassword') {
+						openwindows("index", "../../index.html");
+					} else {
+						mui.plusReady(function() {　
+							//触发父页面的自定义事件(refresh),从而进行刷新
+							mui.fire(plus.webview.getWebviewById("mine/mine.html"), 'minreload');
+							//返回true,继续页面关闭逻辑
+							return true;
+						});
+						var curr = plus.webview.currentWebview();
+						mui.back();
+						curr.close();
+					}
+				}
+			}
+
+			var jptBindsuccess = function(response) { //响应成功
+				if(response.code == 200) {
+					if(response.data.result == 'true') {
+						bind('true');
+					} else if(response.data.result == 'false') {
+						bind('false');
+					}
+				} else if(response.code == 217) {
+					mui.toast("系统繁忙，请稍后重试 ");
+				} else if(response.code == 215) {
+					mui.toast("系统繁忙，请稍后重试 ");
+				} else {
+					mui.toast(response.msg);
+				}
+			};
+
+			function ajax(url, data, id) {
+				if(id == 'jgtbind') {
+					mui.getJSON(url, data, jptBindsuccess);
+				}
+			}
+
+			function jgtBind(token) {
+				ajax(jgtbindUrl, {
+					token: token
+				}, 'jgtbind');
+			}
+
+			var loginsuccess = function(response) { //响应成功
+				if(response.code == 200) {
+					mui.toast("登陆成功 ");
+					plus.storage.setItem("token", response.data.token);
+					plus.storage.setItem("mobile", response.data.mobile);
+					jgtBind(response.data.token);
+				} else if(response.code == 217) {
+					wt.close();
+					mui.toast("系统繁忙，请稍后重试 ");
+				} else if(response.code == 215) {
+					wt.close();
+					mui.toast("系统繁忙，请稍后重试 ");
+				} else {
+					wt.close();
+					mui.toast(response.msg);
+				}
+			};
+
+			getuserid("forgetPassword").addEventListener('tap', function(event) { //
+				openwindows('forget_password', 'forget_password.html')
+			}, false);
+			getuserid("regist").addEventListener('tap', function(event) { //
+				openwindows('regist', 'newregist.html')
+			}, false);
+
+			function timest() {
+				var tmp = Date.parse(new Date()).toString();
+				tmp = tmp.substr(0, 10);
+				return tmp;
+			}
+
+			function getDeviceInfo() {
+				var str = "";
+				str += plus.device.model + "; " + plus.device.vendor;
+				return str;
+			}
+			getuserid("loginphoneNum").addEventListener('input', function() {
+				console.log(this.value);
+				var mobile1 = /(^\d{11}$)/;
+				if(mobile1.test(this.value) == false || getuserid("password").value == '') {
+					getuserid("login").disabled = true;
+				} else {
+					getuserid("login").disabled = false;
+				}
+			});
+			getuserid("password").addEventListener('input', function() {
+				console.log(this.value);
+				var mobile1 = /(^\d{11}$)/;
+				if(this.value == '' || mobile1.test(getuserid("loginphoneNum").value) == false) {
+					getuserid("login").disabled = true;
+				} else {
+					getuserid("login").disabled = false;
+				}
+			});
+			getuserid("login").disabled = true;
+			mui("body").on("tap", ".mui-icon-clear", function() {
+				console.log("13213");
+				getuserid("login").disabled = true;
+			});
+			getuserid("login").addEventListener('tap', function(event) {
+				if(nettest()) {
+					var mobile1 = /(^\d{11}$)/;
+					if(getuserid("loginphoneNum").value != '' && getuserid("password").value != '' && getuserid("password").value.length >= 6 && getuserid("password").value.length <= 16 && mobile1.test(getuserid("loginphoneNum").value) != false) {
+						wt = plus.nativeUI.showWaiting();
+						mui.post(loginUrl, {
+							phoneNumber: getuserid("loginphoneNum").value,
+							password: hex_md5(getuserid("password").value),
+							timestamp: timest(),
+							device: getDeviceInfo()
+						}, loginsuccess, 'json');
+					} else if(mobile1.test(getuserid("loginphoneNum").value) == false) {
+						mui.toast("手机号不正确 ");
+					} else {
+						if(getuserid("loginphoneNum").value == '') {
+							mui.toast("请输入手机号 ");
+						} else if(getuserid("password").value == '') {
+							mui.toast("请输入密码 ");
+						} else if(!getuserid("password").value.length > 6 || !getuserid("password").value.length < 16) {
+							mui.toast("密码不符合规范 ");
+						}
+					}
+				}
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>入学须知</title>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style>
+			.mui-bar-nav {
+				top: 0;
+				-webkit-box-shadow: 0 1px 6px #65CAFE;
+				box-shadow: 0 1px 6px #65CAFE
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #00B8DA;height: 50px;">
+			<div style="margin-top: 3px;">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left" style="color: #FFFFFF;width: 35px;">
+				<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+				<h1 class="mui-title" style="color: #FFFFFF;left: 40px;right: 40px;font-size: 19px;">入学须知</h1>
+			</div>
+		</header>
+		<div class="mui-content" style="background-size: 100%;background-image: url(../../images/detabj.png);margin-top: 50px;">
+			<div style="margin-top: 2%;">
+				<div style="margin-left: 15%;width: 70%;">
+					<p>一、入学报到时间:详见《录取通知书》。</p>
+					<p>二、报到时凭《录取通知书》和身份证等有效证件报到。</p>
+					<p>三、新生如不能按时报道，须向我院提出书面申请，经同意后方可延期报到；否则，视为自行放弃入学资格。</p>
+					<p>四、中共党员须由当地县、市一级组织部门开具的党组织关系介绍信（党员介绍信函头请写：中共四川省直属机关工委），团员凭团员证接转组织关系，相关接转手续报到时交由相关系。</p>
+					<p>五、凡被我院录取的新生，城镇户口原则上不迁户。农村户口是否迁户，由学生自愿确定。迁户必须在入学时办理，过时不再办理迁户手续。报到时迁户证明交相关系。</p>
+					<p>六、按各省（市）招办规定，凡需自带纸质档案入校的，请持《录取通知书》到当地招办（或中学）提取档案，报到时交由相关系。</p>
+					<p>七、请新生复印好《录取通知书》，以备办理其它手续。</p>
+				</div>
+				<div align="center">
+					<img src="../../images/qzl.png" onclick="openAMap()" width="50%" height="40px" style="margin-top: 8%;" />
+				</div>
+				<img src="../../images/active_1.png" width="0" height="0" />
+			</div>
+		</div>
+		<script type="text/javascript" charset="utf-8">
+			var wt;
+			var url = null;
+			var id = null;
+			var map = 0;
+
+			function openAMap() {
+				switch(plus.os.name) {
+					case "Android":
+						// 规范参考官方网站：http://lbs.amap.com/api/uri-api/android-uri-explain/
+						url = "androidamap://viewMap?sourceApplication=HelloH5&poiname=博学馆&lat=30.692104&lon=103.81489&dev=0";
+						id = "com.autonavi.minimap";
+						break;
+					case "iOS":
+						// 规范参考官方网站：http://lbs.amap.com/api/uri-api/ios-uri-explain/
+						url = "iosamap://viewMap?sourceApplication=HelloH5&poiname=博学馆&lat=30.692104&lon=103.81489&dev=0";
+						id = "itunes.apple.com/cn/app/gao-tu-zhuan-ye-dao-hang-ban/id461703208?mt=8";
+						break;
+					default:
+						return;
+						break;
+				}
+				if(plus.runtime.isApplicationExist({
+						pname: id
+					})) {
+					console.log("高德应用已安装");
+					map = 1;
+				} else {
+					console.log("高德应用未安装");
+				}
+				openBMap();
+			}
+
+			function openBMap() {
+				var url = null,
+					id = null,
+					f = null;
+				switch(plus.os.name) {
+					case "Android":
+						// 规范参考官方网站：http://developer.baidu.com/map/index.php?title=uri/api/android
+						url = "baidumap://map/marker?location=39.968789,116.347247&title=DCloud&content=%e6%89%93%e9%80%a0HTML5%e6%9c%80%e5%a5%bd%e7%9a%84%e7%a7%bb%e5%8a%a8%e5%bc%80%e5%8f%91%e5%b7%a5%e5%85%b7&src=HelloH5";
+						id = "com.baidu.BaiduMap";
+						break;
+					case "iOS":
+						// 规范参考官方网站：http://developer.baidu.com/map/index.php?title=uri/api/ios
+						url = "baidumap://map/marker?location=39.968789,116.347247&title=DCloud&content=%e6%89%93%e9%80%a0HTML5%e6%9c%80%e5%a5%bd%e7%9a%84%e7%a7%bb%e5%8a%a8%e5%bc%80%e5%8f%91%e5%b7%a5%e5%85%b7&src=HelloH5";
+						id = "itunes.apple.com/cn/app/bai-du-de-tu-yu-yin-dao-hang/id452186370?mt=8";
+						break;
+					default:
+						return;
+						break;
+				}
+				if(plus.runtime.isApplicationExist({
+						pname: id
+					})) {
+					console.log("百度地图已安装");
+					map = 1;
+				} else {
+					console.log("百度地图未安装");
+				}
+				if(map == 1) {
+					getPos(); //调用第三方地图
+				} else {
+					alert("您当前没有安装地图，需多次刷新导航，如你需要更精准的导航请下载高德地图");
+					mui.openWindow({
+						url: '../s_navigation/school1.html',
+						id: 'svtcc',
+						extras: {
+							nextdlong: '103.818942',
+							nextwdlat: '30.686533'
+						}
+					});
+				}
+			}
+
+			function getPos() {
+				wt = plus.nativeUI.showWaiting();
+				plus.geolocation.getCurrentPosition(geoInf, function(e) {
+					wt.close();
+				}, {
+					geocode: false
+				});
+			}
+
+			function geoInf(position) {
+				wt.close();
+				var codns = position.coords;
+				var lat = codns.latitude; //获取到当前位置的纬度；
+				var log = codns.longitude; //获取到当前位置的经度
+				navigateWithMap(log, lat);
+			}
+
+			function navigateWithMap(longt, lat) {
+				if('Android' === plus.os.name && navigator.userAgent.indexOf('StreamApp') > 0) {
+					plus.nativeUI.toast('当前环境暂不支持地图插件');
+					return;
+				}
+				// 设置目标位置坐标点和其实位置坐标点
+				var dst = new plus.maps.Point(103.816484, 30.689258); //大门 
+				var src = new plus.maps.Point(longt, lat); //起点
+				// 调用系统地图显示 
+				plus.maps.openSysMap(dst, '四川交通职业技术学院正门', src);
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>意见反馈</title>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #00B8DA;height: 50px;">
+			<div style="margin-top: 3px;">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left" style="color: #FFFFFF;width: 35px;">
+					<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+				<h1 class="mui-title" style="color: #FFFFFF;left: 40px;right: 40px;font-size: 19px;">意见反馈</h1>
+				<span id="submit" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" style="background: #00B8DA;color: #FFFFFF;margin-right: 10px;font-size: 19px;">发送</button>
+		</div>
+		</header>
+		<div class="mui-content">
+			<div class="mui-page-content">
+				<p style="margin-left: 20px;margin-top: 20px;color: #000000;font-size: 18px;">
+					问题和意见
+				</p>
+				<div class="row mui-input-row">
+					<textarea id='question' maxlength="200" class="mui-input-clear question" placeholder="请详细描述你的问题和意见(字数在200字以内)..." style="height: 200px;"></textarea>
+				</div>
+				<p id="phone" style="margin-left: 20px;color: #000000;font-size: 18px;">
+					QQ/邮箱
+				</p>
+				<div class="mui-input-row">
+					<input id='contact' type="text" class="mui-input-clear contact" placeholder="(选填,方便我们联系你 )" />
+				</div>
+			</div>
+
+		</div>
+		<script type="text/javascript" src="../../js/userjs.js" ></script>
+		<script type="text/javascript" charset="utf-8">
+		var network = true; //网路判断 //网路判断
+		if(mui.os.plus) { //测试是否联网
+				mui.plusReady(function() {
+					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+						network = false;
+					}
+					if(network) { //请求数据
+
+					} else {
+						mui.toast("当前网络不给力，请稍后再试 ");
+					}
+
+				});
+			}
+			getuserid("submit").addEventListener('tap', function(event) {
+				if(network) {
+					if(getuserid("question").value!=''){
+					 mui.getJSON(opinionUrl,{
+					 	 msg : getuserid("question").value,
+   						contact :getuserid("contact").innerHTML,
+			 			token:plus.storage.getItem("token")
+					 	},function(rsp){
+					 		if(rsp.code==200){
+								mui.back();
+								mui.toast("提交成功");
+					 			
+					 		}else{
+					 			mui.toast("系统繁忙，提交失败");
+					 		}
+						 });
+					 }else{
+					 	mui.toast("提交内容不能为空");
+					 }
+				} else {
+					mui.toast("当前网络不给力，请稍后再试 ");
+				}
+			});
+		
+		</script>
+	</body>
+
+</html>

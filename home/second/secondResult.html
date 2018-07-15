@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body style="background-color: #F3F3F3;">
+
+		<header class="mui-bar mui-bar-nav" style="background: #00B8DA;height: 50px;">
+			<div style="margin-top: 3px;">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left" style="color: #FFFFFF;width: 35px;">
+					<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+				<h1 class="mui-title" style="color: #FFFFFF;left: 40px;right: 40px;font-size: 19px;">等级查询</h1>
+			</div>
+		</header>
+		<div class="mui-card" style="margin-top: 20%;">
+			<div class="mui-card-header">
+				<div id="" class=" " style="font-size: 25px;text-align: center;line-height: 100%;margin-top: 5%;margin-bottom: 2%;">
+					全国计算机等级考试（ncre）-查看成绩
+				</div>
+			</div>
+			<div class="mui-card-content" style="margin-top: 5%;">
+				<table width="94%" cellpadding="0" style="margin-left: 10px;margin-right: 10px;margin-top: 25px;">
+					<tr style="position:relative;">
+						<td>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</td>
+						<td id="stuName"></td>
+						<td rowspan="4" align="center"><img id="stuimg" width="120px" height="150px" style="vertical-align: middle" /></td>
+					</tr>
+					<tr>
+						<td>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;份：</td>
+						<td id="year"></td>
+					</tr>
+					<tr>
+						<td>月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;份：</td>
+						<td id="month"></td>
+					</tr>
+					<tr>
+						<td>成&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;绩:</td>
+						<td id="score">100</td>
+					</tr>
+
+					<tr height="50px">
+						<td>身份证号：</td>
+						<td colspan="2" id="idcard">511155666222255889965</td>
+					</tr>
+					<tr height="50px">
+						<td>考试等级：</td>
+						<td colspan="2" style="color: #F0BF74;" id="ispass">合格</td>
+					</tr>
+					<tr height="50px">
+						<td>准考证号:</td>
+						<td colspan="2" id="tNumber">24655666664444455</td>
+					</tr>
+				</table>
+			</div>
+			<div class="mui-card-footer" style="margin-top: 25px;">来源网站：中国教育考试网</div>
+		</div>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/userjs.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script>
+			mui.plusReady(function() {
+				//获取当前窗体对象
+				var self = plus.webview.currentWebview();
+				//接受上一页面传过来的值；
+				getuserid("stuName").innerHTML = self.name;
+				getuserid("tNumber").innerHTML = self.tNum;
+				getuserid("idcard").innerHTML = self.idcard;
+				getuserid("score").innerHTML = self.score;
+				if(self.score >= 60) {
+					getuserid("ispass").innerHTML = "合格";
+				} else {
+					getuserid("ispass").innerHTML = "不合格";
+				}
+				getuserid("year").innerHTML = self.year;
+				getuserid("month").innerHTML = self.month;
+				getuserid("stuimg").src = self.img;
+
+			});
+			mui.init({
+				beforeback: function() {　　　　 //获得父页面的webview
+					var list = plus.webview.currentWebview().opener();
+					//触发父页面的自定义事件(refresh),从而进行刷新
+					mui.fire(list, 'refresh');
+					//返回true,继续页面关闭逻辑
+					return true;
+				}
+			});
+			mui.back();
+		</script>
+
+	</body>
+
+</html>

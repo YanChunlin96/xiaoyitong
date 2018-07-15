@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style>
+			.ui-page-login,
+			body {
+				width: 100%;
+				height: 100%;
+				margin: 0px;
+				padding: 0px;
+			}
+			
+			.mui-content {
+				height: 100%;
+			}
+			
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group {
+				margin-top: 10px;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 22%;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 78%;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.link-area {
+				display: block;
+				margin-top: 25px;
+				text-align: center;
+			}
+			
+			.spliter {
+				color: #bbb;
+				padding: 0px 8px;
+			}
+			
+			.oauth-area {
+				position: absolute;
+				bottom: 20px;
+				left: 0px;
+				text-align: center;
+				width: 100%;
+				padding: 0px;
+				margin: 0px;
+			}
+			
+			.oauth-area .oauth-btn {
+				display: inline-block;
+				width: 50px;
+				height: 50px;
+				background-size: 30px 30px;
+				background-position: center center;
+				background-repeat: no-repeat;
+				margin: 0px 20px;
+				/*-webkit-filter: grayscale(100%); */
+				border: solid 1px #ddd;
+				border-radius: 25px;
+			}
+			
+			.oauth-area .oauth-btn:active {
+				border: solid 1px #aaa;
+			}
+			
+			.oauth-area .oauth-btn.disabled {
+				background-color: #ddd;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #00B8DA;height: 50px;">
+			<div style="margin-top: 3px;">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left" style="color: #FFFFFF;width: 35px;">
+					<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+				<h1 class="mui-title" style="color: #FFFFFF;left: 40px;right: 40px;font-size: 19px;">用户登录</h1>
+			</div>
+		</header>
+
+		<div class="mui-content">
+			<form id='login-form' class="mui-input-group">
+				<div class="mui-input-row">
+					<label>账号</label>
+					<input id='phoneNum' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
+				</div>
+
+				<div class="mui-input-row mui-password">
+					<label>密码</label>
+					<input type="password" id="password" class="mui-input-password" placeholder="请输入密码">
+				</div>
+				<div class="mui-input-row mui-password">
+					<label>密码</label>
+					<input type="password" id="password" class="mui-input-password" placeholder="请输入密码">
+				</div>
+			</form>
+
+			<div class="mui-content-padded">
+				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+				<div class="link-area">
+					<a id='reg'>注册账号</a> <span class="spliter">|</span>
+					<a id='forgetPassword'>忘记密码</a>
+					<a id='test'>test</a>
+				</div>
+			</div>
+
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="../../js/userjs.js"></script>
+		<script src="../../js/common.js" type="text/javascript"></script>
+		<script>
+			var network = true; //网路判断 //网路判断
+			var wt;
+			if(mui.os.plus) { //测试是否联网
+				mui.plusReady(function() {
+					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+						network = false;
+					}
+					if(network) { //请求数据
+
+					} else {
+						mui.toast("当前网络不给力，请稍后再试");
+					}
+
+				});
+			}
+			var loginsuccess = function(response) { //响应成功
+
+				if(response.code == 200) {
+					mui.toast("登陆成功");
+					plus.storage.setItem("token", response.data.token);
+					plus.storage.setItem("mobile", response.data.mobile);
+					jgtBind(response.data.token);
+				} else {
+					wt.close();
+					mui.toast(response.msg);
+				}
+			};
+
+			var jptBindsuccess = function(response) { //响应成功
+				if(response.code == 200) {
+					if(response.data.result == 'true') {
+						bind('true');
+					} else if(response.data.result == 'false') {
+						bind('false');
+					}
+				} else {
+					mui.toast("系统繁忙，请稍后再试");
+
+				}
+			};
+
+			function ajax(url, data, id) {
+				if(id == 'jgtbind') {
+					mui.getJSON(url, data, jptBindsuccess);
+				}
+
+			}
+
+			function bind(jpt) {
+				wt.close();
+				if(jpt == 'false') {
+					var btnArray = ['否', '是'];
+					mui.confirm('请问您是否需要绑定数据？', '是否绑定数据', btnArray, function(e) {
+						if(e.index == 1) {
+							openwindows("bind", "bind.html");
+						} else {
+							openwindows("home", "../../index.html");
+						}
+					});
+				} else {
+					openwindows("home", "../../index.html");
+				}
+			}
+
+			function jgtBind(token) {
+				ajax(jgtbindUrl, {
+					token: token
+				}, 'jgtbind');
+			}
+
+			getuserid("reg").addEventListener('tap', function(event) { //跳转到注册界面
+				openwindows('reg', 'regist.html')
+			}, false);
+			getuserid("forgetPassword").addEventListener('tap', function(event) { //
+				openwindows('forget_password', 'forget_password.html')
+			}, false);
+			getuserid("test").addEventListener('tap', function(event) { //跳转到注册界面
+				openwindows('test', 'newlogin.html')
+			}, false);
+
+			function timest() {
+				var tmp = Date.parse(new Date()).toString();
+				tmp = tmp.substr(0, 10);
+				return tmp;
+			}
+
+			function getDeviceInfo() {
+				var str = "";
+				str += plus.device.model + ";" + plus.device.vendor;
+				return str;
+			}
+
+			getuserid("login").addEventListener('tap', function(event) {
+				if(network) {
+					//					alert(hex_md5(getuserid("password").value));
+					//					alert(timest());
+					//					alert(getuserid("phoneNum").value);
+					var mobile1 = /(^\d{11}$)/;
+					if(getuserid("phoneNum").value != '' && getuserid("password").value != '' && getuserid("password").value.length >= 6 && getuserid("password").value.length <= 16 && mobile1.test(getuserid("phoneNum").value) != false) {
+						wt = plus.nativeUI.showWaiting();
+						mui.getJSON(loginUrl, {
+							phoneNumber: getuserid("phoneNum").value,
+							password: hex_md5(getuserid("password").value),
+							timestamp: timest(),
+							device: getDeviceInfo()
+						}, loginsuccess);
+					} else if(mobile1.test(getuserid("phoneNum").value) == false) {
+						mui.toast("手机号不正确");
+					} else {
+						if(getuserid("phoneNum").value == '') {
+							mui.toast("请输入手机号");
+						} else if(getuserid("password").value == '') {
+							mui.toast("请输入密码");
+						} else if(!getuserid("password").value.length > 6 || !getuserid("password").value.length < 16) {
+							mui.toast("密码不符合规范");
+						}
+					}
+				} else {
+					mui.toast("当前网络不给力，请稍后再试");
+				}
+			});
+		</script>
+	</body>
+
+</html>

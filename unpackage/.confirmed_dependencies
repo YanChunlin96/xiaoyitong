@@ -1,0 +1,32 @@
+{
+  "q_evaluation/appraisal.html": {
+    "refer": [
+      "q_evaluation/appdetails.html"
+    ]
+  },
+  "index.html": {
+    "resources": [
+      "home/home.html"
+    ],
+    "refer": [
+      "q_evaluation/appraisal.html",
+      "mine/mine.html",
+      "guide.html",
+      "home/home.html"
+    ]
+  },
+  "home/home.html": {
+    "refer": [
+      "home/news/newsdetails.html",
+      "mine/login/newlogin.html",
+      "home/computerExam/inSchool.html",
+      "home/second/second.html",
+      "home/computerExam/outSchool.html"
+    ]
+  },
+  "home/second/second.html": {
+    "refer": [
+      "home/second/secondResult.html"
+    ]
+  }
+}

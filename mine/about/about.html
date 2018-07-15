@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>关于我们</title>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style>
+			.update {
+				font-style: normal;
+				color: #999999;
+				font-size: 14px
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #00B8DA;height: 50px;">
+			<div style="margin-top: 3px;">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left" style="color: #FFFFFF;width: 35px;">
+				<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+				<h1 class="mui-title" style="color: #FFFFFF;left: 40px;right: 40px;font-size: 19px;">关于我们</h1>
+			</div>
+		</header>
+		<div class="mui-content">
+			<div align="center">
+				<img src="../../images/xytlogo.png" width="25%" style="margin-top: 13%;" />
+				<div style="margin-top: 4%;font-size: 19px;">校易通</div>
+				<p style="margin-top: 2%;font-size: 15px;">v1.0.0</p>
+			</div>
+			<div style="margin-top: 10%;">
+				<div id="news">
+					<div id="refreshContainer">
+						<ul class="mui-table-view">
+							<li id="a" class="mui-table-view-cell">
+								<a>
+									<img class="mui-pull-left" src="../../images/wx.png" width="25px" height="25px">
+									<div style="margin-left: 15%;margin-top: 1%;font-size: 14px;color: #333333;">
+										微信服务号<i id="hc" class="mui-pull-right update">{{wexin}}</i>
+									</div>
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a>
+									<img class="mui-pull-left" src="../../images/hz.png" width="25px" height="25px">
+									<div style="margin-left: 15%;margin-top: 1%;font-size: 14px;color: #333333;">
+										商务合作<i id="hc" class="mui-pull-right update">{{partner}}</i>
+									</div>
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a>
+									<img class="mui-pull-left" src="../../images/phone.png" width="25px" height="25px">
+									<div style="margin-left: 15%;margin-top: 1%;font-size: 14px;color: #333333;">
+										联系电话<i id="hc" class="mui-pull-right update">{{call}}</i>
+									</div>
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a>
+									<img class="mui-pull-left" src="../../images/inter.png" width="25px" height="25px">
+									<div style="margin-left: 15%;margin-top: 1%;font-size: 14px;color: #333333;">
+										官方网站<i id="hc" class="mui-pull-right update">{{web}}</i>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div align="center">
+				<p style="margin-top: 10%;font-size: 15px;">©2017 xyt.com 远智团队</p>
+			</div>
+		</div>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.plusReady(function() {
+				var w = plus.nativeUI.showWaiting("加载中，请等待...\n2", {
+					loading: {
+						icon: "../../images/waiting.png"
+					}
+				});
+				w.onclose = function() {
+					clearInterval(t);
+				}
+				var n = 2;
+				var t = setInterval(function() {
+					n--;
+					w.setTitle("加载中，请等待...\n" + n);
+					if(n <= 0) {
+						w.close();
+						clearInterval(t);
+					}
+				}, 500);
+				pullupRefresh();
+			});
+
+			function pullupRefresh() {
+				if(window.plus && plus.networkinfo.getCurrentType() === plus.networkinfo.CONNECTION_NONE) {
+					plus.nativeUI.toast('似乎已断开与互联网的连接', {
+						verticalAlign: 'top'
+					});
+					return;
+				}
+
+				mui.getJSON("http://47.92.82.112/public/index.php/app/About", function(rsp) {
+					if(rsp.code == 200 && rsp.data) {
+						news.wexin = rsp.data.wexin;
+						news.partner = rsp.data.partner;
+						news.call = rsp.data.call;
+						news.web = rsp.data.web;
+
+					} else {
+
+						return;
+					}
+				});
+
+			}
+
+			var news = new Vue({
+				el: '#news',
+				data: {
+					wexin: '',
+					partner: '',
+					call: '',
+					web: ''
+				}
+			});
+		</script>
+	</body>
+
+</html>

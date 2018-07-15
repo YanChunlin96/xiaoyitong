@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>注册</title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #00B8DA;height: 50px;">
+			<div style="margin-top: 3px;">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left" style="color: #FFFFFF;width: 35px;">
+					<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+			<h1 class="mui-title" style="color: #FFFFFF;left: 40px;right: 40px;font-size: 19px;">修改密码</h1>
+			</div>
+		</header>
+		<div class="headImg">
+			<div class="touxiang" align="center" style="padding-bottom: 4%;">
+
+				<img src="../../images/xyt.png" width="20%" height="20%" style="margin-top: 20%;" />
+				<div class='mui-ellipsis' style="color: #858585;margin-top: 10%;width: 70%; font-size: 18px; ">您 &nbsp;&nbsp; 的 &nbsp;&nbsp;校&nbsp;&nbsp;园&nbsp;&nbsp;好 &nbsp;&nbsp;帮 &nbsp;&nbsp;手</div>
+			</div>
+		</div>
+		<div id="slider" style="margin-top: 10%;">
+
+			<div class="mui-slider-group">
+				<div id="item1mobile" class="mui-slider-item mui-control-content mui-active" align="center">
+
+					<div class="mui-input-row mui-password mui-input-group" style="font-size: 18px; width: 90%;background-color:rgba(0,0,0,0);height: 40px;">
+						<label style="width: 18%;margin-left: -8px;color: #858585;"><span class="mui-icon mui-icon-locked" style="margin-top: -5px;"></span></label>
+						<input type="password" id="newpassword" maxlength="16" class="mui-input-password" placeholder="请输入密码6-16位之间" style="font-size:14px; width: 82%;float: left;margin-top: 2px;">
+					</div>
+					<div class="mui-input-row mui-password mui-input-group" style="font-size: 18px; width: 90%;background-color:rgba(0,0,0,0); height: 40px;">
+						<label style="width: 18%;margin-left: -8px;color: #858585;"><span class="mui-icon mui-icon-locked" style="margin-top: -5px;"></span></label>
+						<input type="password" id="confirmpwd" maxlength="16" class="mui-input-password" placeholder="请确认密码" style="font-size:14px; width: 82%;float: left;margin-top: 2px;">
+					</div>
+
+					<div class="mui-content-padded" style="width: 90%;margin-top: 8%;">
+						<button id='commit' style="background-color: #2a83ee;height: 40px; top: 8px; border: 0px;padding-top:8px;" class="mui-btn mui-btn-block mui-btn-primary">确认修改
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="../../js/userjs.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+		<script>
+			var network = true; //网路判断 //网路判断
+			var wait = 60;
+			var wt;
+			var mobile1 = /(^\d{11}$)/;
+			var phone, tNumber;
+			if(mui.os.plus) { //测试是否联网
+				mui.plusReady(function() {
+					var self = plus.webview.currentWebview();
+					//接受上一页面传过来的值；
+					phone = self.phoneNumber;
+					tNumber = self.code;
+				});
+			}
+
+			function nettest() {
+				var network;
+				if(mui.os.plus) { //测试是否联网
+					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+						network = 'false';
+						mui.toast("当前网络不给力，请稍后再试");
+					} else {
+						network = 'true';
+					}
+				}
+				return network;
+			}
+
+			var changesuccess = function(response) { //响应成功
+				if(response.code == 200) {
+					wt.close();
+					//mui.toast("修改成功");
+//					var last=plus.webview.getWebviewById('forget_password');
+//					last.close();
+//					var curr = plus.webview.currentWebview();
+//					curr.close();
+					openwindows("login", "newlogin.html");
+					
+				} else {
+					wt.close();
+					mui.toast(response.msg);
+					mui.init({
+						beforeback: function() {　　　　 //获得父页面的webview
+							var list = plus.webview.currentWebview().opener();
+							//触发父页面的自定义事件(refresh),从而进行刷新
+							mui.fire(list, 'forgeterror');
+							//返回true,继续页面关闭逻辑
+							return true;
+						}
+					});
+					mui.back();
+				}
+			};
+			getuserid("newpassword").addEventListener('input', function() {
+				console.log(this.value);
+				if( this.value  == '' || getuserid('confirmpwd').value =='') {
+					getuserid("commit").disabled = true;
+				} else {
+					getuserid("commit").disabled = false;
+				}
+			});
+			getuserid("confirmpwd").addEventListener('input', function() {
+				console.log(this.value);
+				if( this.value  == '' || getuserid('newpassword').value =='') {
+					getuserid("commit").disabled = true;
+				} else {
+					getuserid("commit").disabled = false;
+				}
+			});
+			getuserid("commit").disabled = true;
+			 
+
+			function timest() {
+				var tmp = Date.parse(new Date()).toString();
+				tmp = tmp.substr(0, 10);
+				return tmp;
+			}
+
+			getuserid("commit").addEventListener('tap', function(event) {
+				if(nettest()) {
+					//	alert(hex_md5(getuserid("password").value));
+					if(getuserid("newpassword").value != '' && getuserid("confirmpwd").value != '') {
+						if(getuserid("newpassword").value.length >= 6 && getuserid("newpassword").value.length <= 16 && getuserid("newpassword").value == getuserid("confirmpwd").value) {
+							wt = plus.nativeUI.showWaiting();
+							mui.post(forgetUrl, {
+								phoneNumber: phone,
+								password: hex_md5(getuserid("newpassword").value),
+								timestamp: timest(),
+								code: tNumber
+							}, changesuccess, 'json');
+						} else if(getuserid("newpassword").value.length < 6 || getuserid("newpassword").value.length > 16) {
+							mui.toast("密码不符合规范");
+						} else {
+							mui.toast("两次输入密码不一致");
+						}
+					} else {
+						if(getuserid("newpassword").value == '') {
+							mui.toast("请输入密码");
+						} else if(getuserid("confirmpwd").value == '') {
+							mui.toast("请输入密码");
+						}
+					}
+				}
+			});
+		</script>
+		</script>
+	</body>
+
+</html>

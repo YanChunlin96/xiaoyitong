@@ -1,0 +1,362 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel=" stylesheet">
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/common.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../js/immersed.js"></script>
+		<script type="text/javascript" src="../../js/userjs.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<header class="mui-bar mui-bar-nav" style="background: #00B8DA;height: 50px;">
+			<div style="margin-top: 3px;">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;"></a>
+				<h1 class="mui-title" style="color: #FFFFFF;font-size: 19px;">等级考试报名</h1>
+			</div>
+		</header>
+
+		<div class="mui-input-row" style="margin-top: 14%;background-color: #FFFFFF;">
+			<label>姓名：</label>
+			<input id="stuName" type="text" class="mui-input-clear" placeholder="请输入姓名">
+		</div>
+
+		<div class="mui-input-row" style="margin-top: 1px;background-color: #FFFFFF;">
+			<label>身份证号：</label>
+			<input id="StuIdCard" type="text" class="mui-input-clear" placeholder="请输入邮箱">
+		</div>
+		<div class="mui-input-row" style="margin-top: 1px;background-color: #FFFFFF;">
+			<label>邮箱：</label>
+			<input id="StuEmail" type="text" class="mui-input-clear" placeholder="请输入邮箱">
+		</div>
+
+		<div class="mui-input-row" style="margin-top: 1px;background-color: #FFFFFF;">
+			<label>电话：</label>
+			<input id="StuTelephone" type="tel" class="mui-input-clear" placeholder="请输入电话号码">
+		</div>
+		<div id='showNationPicker' class="mui-input-row" style="margin-top: 1px;background-color: #FFFFFF;">
+			<label>民族：</label>
+			<img src="../../images/check_box_normal_bg_01.png" class="mui-pull-right" width="3%" height="10px" style="margin-top: 20px;margin-right: 5px;" />
+			<input type="text" id='NationResult' style="width: 60%;  text-align: right; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;" readonly="readonly" placeholder="请选择民族">
+		</div>
+
+		<div id='showEducationPicker' class="mui-input-row" style="margin-top: 1px;background-color: #FFFFFF;">
+			<label>教育程度：</label>
+			<img src="../../images/check_box_normal_bg_01.png" class="mui-pull-right" width="3%" height="10px" style="margin-top: 20px;margin-right: 5px;" />
+			<input type="text" id='EducationResult' style="width: 60%;  text-align: right; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;" readonly="readonly" placeholder="请选择文化程度">
+		</div>
+
+		<div id='showCarreraPicker' class="mui-input-row" style="margin-top: 1px;background-color: #FFFFFF;">
+			<label>职业：</label>
+			<img src="../../images/check_box_normal_bg_01.png" class="mui-pull-right" width="3%" height="10px" style="margin-top: 20px;margin-right: 5px;" />
+			<input type="text" id='CarreraResult' style="width: 60%;  text-align: right; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;" readonly="readonly" placeholder="请选择职业">
+		</div>
+
+		<div id='showLevelPicker' class="mui-input-row" style="margin-top: 1px;background-color: #FFFFFF;">
+			<label>报考级别：</label>
+			<img src="../../images/check_box_normal_bg_01.png" class="mui-pull-right" width="3%" height="10px" style="margin-top: 20px;margin-right: 5px;" />
+			<input type="text" id='LevelResult' style="width: 60%;  text-align: right; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;" readonly="readonly" placeholder="请选择级别">
+		</div>
+
+		<img onclick="popuimg()" width="144px" height="192px" class="mui-action-preview" style="margin-top: 5%;" id="head-img" src="../../images/addphotto.png">
+		<p id="empty" style="font-size:12px;color:#C6C6C6; margin-left: 6%;">相册选取</p>
+		<div id="dcontent" class="dcontent">
+			<br/>
+			<div class="button" onclick="commit()">提交</div>
+			<br/>
+		</div>
+	</body>
+	<script type="text/javascript" charset="utf-8">
+		mui.init();
+		var data = {
+			StuName: '',
+			StuIDCard: '',
+			stuNum: '',
+			StuGender: '',
+			StuEmail: '',
+			StuTelephone: '',
+			StuNationa: '',
+			StuEdu: '',
+			StuCarr: '',
+			StuLevel: '',
+			StuSubject: '',
+			isOutSchool: '1',
+			photo: ''
+		};
+
+		var NationPicker = new mui.PopPicker(); //初始化名族picker
+		var showNationPickerButton = getuserid('showNationPicker'); //选择民族
+		var nationResult = getuserid('NationResult'); //民族显示lable
+
+		var EducationPicker = new mui.PopPicker(); //初始化文化程度picker
+		var showEducationPickerButton = getuserid('showEducationPicker'); //选择文化程度
+		var educationResult = getuserid('EducationResult'); //文化程度显示lable
+
+		var CarreraPicker = new mui.PopPicker(); //初始化职业picker
+		var showCarreraPickerButton = getuserid('showCarreraPicker'); //选择职业
+		var carreraResult = getuserid('CarreraResult'); //职业显示lable
+
+		var LevelPicker = new mui.PopPicker({ //初始化等级picker
+			layer: 2
+		});
+		var showLevelPickerButton = getuserid('showLevelPicker'); //选择等级
+		var levelResult = getuserid('LevelResult'); //等级显示lable
+
+		var success = function(response) { //响应成功
+			if(response.code == 200) {
+				NationPicker.setData(response.data.nation); //民族
+				EducationPicker.setData(response.data.education); //文化
+				CarreraPicker.setData(response.data.carrera); //职业
+				LevelPicker.setData(response.data.level); //等级
+				ajax(outschoolInfoUrl, {
+					token: plus.storage.getItem("token")
+				}, 'userInfo');
+			}
+		};
+
+		var userinfosuccess = function(response) { //响应系部数据成功
+			if(response.code == 200) {
+				var dataresponse = response.data;
+				getuserid("stuName").value = dataresponse.name;
+				getuserid("StuIdCard").value = dataresponse.idcard;
+				getuserid("StuEmail").value = dataresponse.email;
+				getuserid("StuTelephone").value = dataresponse.mobile;
+				getuserid("head-img").src = ip + dataresponse.photo;
+				data.photo = ip + dataresponse.photo;
+				
+			}
+		};
+		var ajax = function(url, data, id) { //发送请求
+			if(id == 'exam') {
+				mui.getJSON(url, data, success);
+			}
+			if(id == 'userInfo') {
+				mui.getJSON(url, data, userinfosuccess);
+			}
+		};
+
+		var network = true; //网路判断 //网路判断
+
+		if(mui.os.plus) { //测试是否联网
+			mui.plusReady(function() {
+				if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+					network = false;
+				}
+				if(network) { //请求数据
+					ajax(examUrl, '', 'exam');
+
+				} else {
+					mui.toast("当前网络不给力，请稍后再试");
+				}
+			});
+		}
+
+		// 从相册添加文件
+		function appendByGallery() {
+			plus.gallery.pick(function(p) { //打开相册 **p**代表选择的路径
+				plus.io.resolveLocalFileSystemURL(p, function(e) {
+					var e = e.fullPath + "?version=" + new Date().getTime();
+					files = e;
+					data.photo = e;
+					getuserid('head-img').src = e;
+					upload();
+				});
+			});
+		}
+
+		function popuimg() { //底部弹框
+			if(mui.os.plus) {
+				plus.nativeUI.actionSheet({
+					title: "上传图片",
+					cancel: "取消",
+					buttons: a
+				}, function(b) {
+					switch(b.index) {
+						case 0:
+							break;
+						case 1:
+							appendByGallery();
+							break;
+						default:
+							break
+					}
+				})
+			}
+		}
+		// 产生一个手机唯一标识码
+		function getUid() {
+			return plusReady();
+			//return Math.floor(Math.random() * 100000000 + 10000000).toString();
+		};
+
+		function plusReady() {
+			return plus.device.uuid;
+		}
+
+		function isCardNo() {
+
+			// 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是    校验位，可能为数字或字符X     
+			var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+			if(reg.test(getuserid(id).value) == false) {
+				mui.toast("身份证输入不合法");
+				return false;
+			}
+
+			if(getuserid("StuEmail").value == "") { //输入不能为空
+				alert("输入不能为空!");　　
+				return false;　　
+			} else if(reg.test(getuserid(id).value) == false) {
+				mui.toast("身份证输入不合法");
+				return false;
+			}
+
+			if(getuserid("StuTelephone").value == "") { //输入不能为空
+				alert("输入不能为空!");　　
+				return false;　　
+			} else if(reg.test(getuserid(id).value) == false) {
+				mui.toast("身份证输入不合法");
+				return false;
+			}
+			return true;
+		}
+
+		function commit() { //提交数据
+			if(getuserid("StuEmail").value != '' && getuserid("StuIdCard").value != '' && getuserid("stuName").value != '' && getuserid("StuTelephone").value != '' && data.StuNationa != '' && data.StuEdu != '' && data.StuCarr != '' && data.StuLevel != '' && data.StuSubject != '' && data.photo != '') {
+				var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+				var myreg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+				var mobile1 = /(^\d{11}$)/;
+
+				if(reg.test(getuserid("StuIdCard").value) == false) {
+					mui.toast("身份证输入不合法");
+				} else if(mobile1.test(getuserid("StuTelephone").value) == false) {
+					mui.toast('请输入有效电话号码！');
+				} else if(myreg.test(getuserid("StuEmail").value) == false) {
+					mui.toast('请输入有效 邮箱！');
+				} else {
+					data.StuName = getuserid("stuName").value;
+					data.StuIDCard = getuserid("StuIdCard").value;
+					data.StuEmail = getuserid("StuEmail").value;
+					data.StuTelephone = getuserid("StuTelephone").value;
+
+					mui.getJSON(server, data, function(data) {
+//						alert(JSON.stringify(data));
+					});
+				}
+			} else {
+
+				if(getuserid("stuName").value == "") { //输入不能为空
+					mui.toast("姓名输入不能为空!");　　
+				} else if(getuserid("StuIdCard").value == "") {
+					mui.toast("身份证号输入不能为空!");　　
+				} else if(getuserid("StuEmail").value == "") {
+					mui.toast("邮箱输入不能为空!");　　
+				} else if(getuserid("StuTelephone").value == "") {
+					mui.toast("电话输入不能为空!");　　
+				} else if(data.StuNationa == "") {
+					mui.toast("请选择民族!");　　
+				} else if(data.StuEdu == "") {
+					mui.toast("请选择文化程度!");　　
+				} else if(data.StuCarr == "") {
+					mui.toast("请选择职业!");　　
+				} else if(data.StuLevel == "") {
+					mui.toast("请选择报考级别");　　
+				} else if(data.StuSubject == "") {
+					mui.toast("三级和四级暂时不能报考");　　
+				} else {
+
+				}
+			}
+		}
+
+		// 上传文件
+		function upload() {
+			if(data.photo.length <= 0) {
+				mui.toast("请添加图片！");
+				return;
+			}
+			var wt = plus.nativeUI.showWaiting();
+			var task = plus.uploader.createUpload(server, {
+					method: "POST"
+				},
+				function(t, status) { //上传完成
+					if(status == 200) {
+						mui.alert("上传成功：" + t.responseText);
+						//plus.storage.setItem("uploader", t.responseText);
+						wt.close();
+						//						var w = plus.webview.create("examSussce.html", "examSussce.html");
+						//						w.addEventListener("loaded", function() {
+						//							wt.close();
+						//							w.show("slide-in-right", 300);
+						//						}, false);
+					} else {
+						wt.close();
+					}
+				});
+			task.addFile(data.photo, {
+				key: "image"
+			});
+			task.start();
+		};
+
+		var show = function(picker, result, pid) { //选择显示结果函数
+			picker.show(function(items) {
+				if(pid == 'level') {
+					data.StuLevel = items[0].value;
+					if(items[1].value != undefined) {
+						data.StuSubject = items[1].value;
+						result.value = items[0].text + " " + items[1].text;
+
+					} else {
+						data.StuSubject = "";
+						result.value = items[0].text + " ";
+					}
+				} else {
+					result.value = items[0].text;
+					if(picker == NationPicker) {
+						data.StuNationa = items[0].value;
+					}
+					if(picker == EducationPicker) {
+						data.StuEdu = items[0].value;
+					}
+					if(picker == CarreraPicker) {
+						data.StuCarr = items[0].value;
+					}
+
+				}
+				//	var item = ExamPicker.getSelectedItems();
+				//	mui.alert(item[0].value);
+			});
+		};
+
+		showNationPickerButton.addEventListener('tap', function() { //民族选择器
+			show(NationPicker, nationResult);
+		});
+		showEducationPickerButton.addEventListener('tap', function() { //文化选择器
+			show(EducationPicker, educationResult);
+		});
+		showCarreraPickerButton.addEventListener('tap', function() { //职业选择器
+			show(CarreraPicker, carreraResult);
+		});
+		showLevelPickerButton.addEventListener('tap', function() { //级别选择器
+			show(LevelPicker, levelResult, 'level');
+		});
+	</script>
+
+</html>

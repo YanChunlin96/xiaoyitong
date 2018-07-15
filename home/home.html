@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style>
+			.mui-grid-view.mui-grid-9 .mui-table-view-cell {
+				margin: 0;
+				padding: 11px 6px;
+				vertical-align: top;
+				border-right: 0px solid #eee;
+				border-top: 0px solid #eee
+			}
+			
+			.mui-grid-view.mui-grid-9 {
+				margin: 0;
+				padding: 0;
+				border-top: 0px solid #FFFFFF;
+				border-left: 10px solid #FFFFFF;
+				border-right: 10px solid #FFFFFF;
+				background-color: #f2f2f2
+			}
+		</style>
+	</head>
+
+	<body style="background-color: #F9F9FB;">
+		<div class="mui-content">
+			<div class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+					<!--支持循环，需要重复图片节点-->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#"><img src="../images/banner44.jpg" width="100%" height="185%" /></a>
+					</div>
+					<div class="mui-slider-item" id="newly_born2">
+						<a href="#"><img src="../images/banner11.png" width="100%" height="185%" /></a>
+					</div>
+					<div class="mui-slider-item" id="course2">
+						<a href="#"><img src="../images/banner22.jpg" width="100%" height="185%" /></a>
+					</div>
+					<div class="mui-slider-item" id="more2">
+						<a href="#"><img src="../images/banner33.jpg" width="100%" height="185%" /></a>
+					</div>
+					<div class="mui-slider-item" id="school2">
+						<a href="#"><img src="../images/banner44.jpg" width="100%" height="185%" /></a>
+					</div>
+					<!--支持循环，需要重复图片节点-->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#"><img src="../images/banner11.png" width="100%" height="185%" /></a>
+					</div>
+				</div>
+				<div class="mui-slider-indicator">
+					<div class="mui-indicator mui-active"></div>
+					<div class="mui-indicator"></div>
+					<div class="mui-indicator"></div>
+					<div class="mui-indicator"></div>
+				</div>
+			</div>
+			<div align="center">
+				<ul class="mui-table-view mui-grid-view mui-grid-9" style="background: #FFFFFF;padding-bottom: 10px;">
+					<li id="exam" class="mui-table-view-cell mui-media" style="width: 25%;height: 90px;">
+						<div style="margin-top: 5%;">
+							<span><img src="../images/exam.png" width="50px" height="50px" /></span>
+							<div class="mui-media-body" style="font-size: 13px;">考试查询</div>
+						</div>
+					</li>
+					<li id="course" class="mui-table-view-cell mui-media" style="width: 25%;height: 90px;">
+						<div style="margin-top: 5%;">
+							<span><img src="../images/kb.png" width="50px" height="50px" /></span>
+							<div class="mui-media-body" style="font-size: 13px;">课表查询</div>
+						</div>
+					</li>
+					<li id="score" class="mui-table-view-cell mui-media" style="width: 25%;height: 90px;">
+						<div style="margin-top: 5%;">
+							<span><img src="../images/cj.png" width="50px" height="50px" /></span>
+							<div class="mui-media-body" style="font-size: 13px;">成绩查询</div>
+						</div>
+					</li>
+					<li id="second" class="mui-table-view-cell mui-media" style="width: 25%;height: 90px;">
+						<div style="margin-top: 5%;">
+							<span><img src="../images/djcx.png" width="50px" height="50px" /></span>
+							<div class="mui-media-body" style="font-size: 13px;">二级查询</div>
+						</div>
+					</li>
+					<li id="newly_born" class="mui-table-view-cell mui-media" style="width: 25%;height: 90px;">
+						<div style="margin-top: 5%;">
+							<span><img src="../images/xszn.png" width="50px" height="50px" /></span>
+							<div class="mui-media-body" style="font-size: 13px;">新生指南</div>
+						</div>
+					</li>
+					<li id="school_navigation" class="mui-table-view-cell mui-media" style="width: 25%;height: 90px;">
+						<div style="margin-top: 5%;">
+							<span><img src="../images/xy.png" width="50px" height="50px" /></span>
+							<div class="mui-media-body" style="font-size: 13px;">校园导航</div>
+						</div>
+					</li>
+					<li id="school" class="mui-table-view-cell mui-media" style="width: 25%;height: 90px;">
+						<div style="margin-top: 5%;">
+							<span><img src="../images/xl.png" width="50px" height="50px" /></span>
+							<div class="mui-media-body" style="font-size: 13px;">教学校历</div>
+						</div>
+					</li>
+					<!--<li id="park_navigation" class="mui-table-view-cell mui-media" style="width: 25%;height: 90px;">
+						<div style="margin-top: 5%;">
+							<span><img src="../images/tc.png" width="50px" height="50px" /></span>
+							<div class="mui-media-body" style="font-size: 13px;">停车导航</div>
+						</div>
+					</li>-->
+					<li id="test" class="mui-table-view-cell mui-media" style="width: 25%;height: 90px;">
+						<div style="margin-top: 5%;">
+							<span><img src="../images/djbm.png" width="50px" height="50px" /></span>
+							<div class="mui-media-body" style="font-size: 13px;">二级报名</div>
+						</div>
+					</li>
+
+				</ul>
+
+			</div>
+
+			<ul class="mui-table-view mui-grid-view" style="margin-top: 10px;">
+				<li id="showUserPicker1" class="mui-table-view-cell" style="background: #FFFFFF; width: 100%;height: 30px;">
+					<span class="mui-pull-left"><span style="height: 10px;background: #00B8DA;width: 5px;color: #00B8DA;">|</span>&nbsp;&nbsp;校园资讯</span>
+					<span id="more" class="mui-pull-right" style="margin-right: 15px;font-size: 14px;color: #333333;">更多>></span>
+				</li>
+			</ul>
+
+			<div id="news">
+				<div id="refreshContainer">
+					<ul class="mui-table-view">
+						<li id="newsdetails" class="mui-table-view-cell mui-media" v-for="item in items">
+							<a href="javascript:;" @tap="open_detail(item)" class="mui-navigate-right">
+								<div class="mui-media-body">
+									<img id="img" class="mui-pull-left" style="height: 75px;width: 75px;margin-top: 3px;margin-right: 20px;border-radius: 5%;" :src="item.img">
+									<p class='mui-ellipsis-2' style="color: #000000;font-size: 15px;margin-top: 3px;margin-right: 30px;">{{item.title}}</p>
+									<p style="margin-top: 15px;">
+										{{item.author}}
+										<span class="mui-pull-right" style="margin-right: 30px;">{{item.date}}</span>
+									</p>
+								</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/userjs.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+		<script type="text/javascript" charset="utf-8">
+			var network = true; //网路判断 //网路判断
+			if(mui.os.plus) { //测试是否联网
+				mui.plusReady(function() {
+					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+						network = false;
+					}
+					if(!network) { //请求数据
+						mui.toast("当前网络不给力，请稍后再试");
+					}
+				});
+			}
+
+			var gallery = mui('.mui-slider'); //获得slider插件对象
+			gallery.slider({
+				interval: 5000 //自动轮播周期，若为0则不自动播放，默认为0；
+			});
+
+			var islogin = function(id, url, source) {
+				var wt = plus.nativeUI.showWaiting();
+				if(plus.storage.getItem("token") != null) {
+					mui.getJSON(isLoginUrl, {
+						token: plus.storage.getItem("token")
+					}, function(response) {
+						wt.close();
+						if(response.code == "200") {
+							if(response.data.result == 'true') {
+								if(source == "exam") {
+									isshool();
+								} else if(source == "second") {
+									mui.ajax(initSecondUrl, {
+										data: {
+											token: plus.storage.getItem('token')
+										},
+										dataType: 'json', //服务器返回json格式数据
+										type: 'get', //HTTP请求类型
+										timeout: 8000, //超时时间设置为10秒；
+										success: function(data) {
+											//服务器返回响应，根据响应结果，分析是否登录成功；
+											if(data.code == 200) {
+												openwindows(id, url);
+											} else {
+												mui.toast("系统繁忙，请稍后重试");
+											}
+										},
+										error: function(xhr, type, errorThrown) {
+											//异常处理；
+											mui.toast("服务器出错，请稍后重试");
+										}
+									});
+								} else {
+									ajax(jgtbindUrl, {
+										token: plus.storage.getItem("token")
+									}, 'jgtbind', id, url);
+									//	openwindows(id, url);
+								}
+							} else if(response.data.result == 'false') {
+								mui.toast("登录已过期，请重新登陆");
+								openwindows("login", "../mine/login/newlogin.html");
+							}
+						} else if(response.code == 217) {
+							mui.toast("系统繁忙，请稍后重试");
+						} else if(response.code == 215) {
+							mui.toast("系统繁忙，请稍后重试");
+						} else {
+							mui.toast(response.msg);
+						}
+					});
+				} else {
+					wt.close();
+					mui.toast("您还未登录");
+					openwindows("login", "../mine/login/newlogin.html");
+				}
+			};
+
+			function ajax(url, data, id, pageid, pageurl) {
+				if(id == 'jgtbind') {
+					mui.getJSON(url, data, function(response) { //响应成功
+						if(response.code == 200) {
+							if(response.data.result == 'true') {
+								openwindows(pageid, pageurl);
+							} else if(response.data.result == 'false') {
+								mui.toast("您还未绑定信息");
+								openwindows("bind ", "../mine/login/bind.html");
+							}
+						} else if(response.code == 217) {
+							mui.toast("系统繁忙，请稍后重试 ");
+						} else if(response.code == 215) {
+							mui.toast("系统繁忙，请稍后重试 ");
+						} else {
+							mui.toast(response.msg);
+						}
+					});
+				}
+			}
+
+			//更多
+			document.getElementById("more").addEventListener('tap', function(e) {
+				openwindows("more", "news/news.html");
+			});
+			document.getElementById("more2").addEventListener('tap', function(e) {
+				openwindows("more", "news/news.html");
+			});
+			//成绩查询
+			document.getElementById("score").addEventListener('tap', function(e) {
+				islogin("score", "score/score.html");
+			});
+			//课表查询
+			document.getElementById("course").addEventListener('tap', function(e) {
+				islogin("course", "course/course.html");
+			});
+			document.getElementById("course2").addEventListener('tap', function(e) {
+				islogin("course", "course/course.html");
+			});
+			//二级查询
+			document.getElementById("second").addEventListener('tap', function(e) {
+				islogin("second", "second/second.html", "second");
+			});
+			//新生指南
+			document.getElementById("newly_born").addEventListener('tap', function(e) {
+				openwindows("newly_born", "newborn/newly_born.html");
+			});
+			document.getElementById("newly_born2").addEventListener('tap', function(e) {
+				openwindows("newly_born", "newborn/newly_born.html");
+			});
+			//校历
+			document.getElementById("school").addEventListener('tap', function(e) {
+				openwindows("school", "calendar/school.html");
+			});
+			document.getElementById("school2").addEventListener('tap', function(e) {
+				openwindows("school", "calendar/school.html");
+			});
+			//校内导航
+			document.getElementById("school_navigation").addEventListener('tap', function(e) {
+				openwindows("school_navigation", "s_navigation/school_navigation.html");
+				//mui.toast("该功能暂未完善！");
+			});
+			//停车导航
+			//			document.getElementById("park_navigation").addEventListener('tap', function(e) {
+			//				//openwindows("park_navigation", "p_navigation/park_navigation.html");
+			//				mui.toast("该功能暂未完善！");
+			//			});
+			//考试查询
+			document.getElementById("exam").addEventListener('tap', function(e) {
+				islogin("exam", "exam/exam.html");
+			});
+
+			//二级报名
+			document.getElementById("test").addEventListener('tap', function(e) {
+//				mui.toast("现在还不是报名时间");
+				islogin("park_navigation", "p_navigation/park_navigation.html", "exam");
+				// islogin("park_navigation", "p_navigation/park_navigation.html", "exam");
+			});
+			var isshool = function() {
+				var btnArray = ['否', '是'];
+				mui.confirm('请问您是否校外？', '是否校外', btnArray, function(e) {
+
+					if(e.index == 1) {
+						mui.openWindow({
+							id: 'computer_test_isOutSchool',
+							url: 'computerExam/outSchool.html',
+							show: {
+								aniShow: 'slide-in-right',
+								duration: 300
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+
+					} else if(e.index == 0) {
+						mui.openWindow({
+							id: 'computer_test_inSchool',
+							url: 'computerExam/inSchool.html',
+							show: {
+								aniShow: 'slide-in-right',
+								duration: 300
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+
+					}
+				});
+			}
+
+			var webview_detail = null; //详情页webview
+			var lastPage = 1;
+			mui.plusReady(function() {
+				pullupRefresh();
+			});
+			var count = 0;
+
+			function pullupRefresh() {
+				if(window.plus && plus.networkinfo.getCurrentType() === plus.networkinfo.CONNECTION_NONE) {
+					plus.nativeUI.toast('似乎已断开与互联网的连接', {
+						verticalAlign: 'top'
+					});
+					return;
+				}
+				mui.getJSON("http://47.92.82.112/public/index.php/news/News?pageRows=10&page=" + lastPage, function(rsp) {
+
+					if(rsp.data && rsp.code == 200) {
+						news.items = news.items.concat(convert(rsp.data));
+						lastPage++;
+					} else {
+
+						return;
+					}
+
+				});
+			}
+
+			mui.plusReady(function() {
+				//预加载详情页
+				webview_detail = mui.preload({
+					url: 'news/newsdetails.html',
+					id: 'news_detail',
+				});
+			});
+
+			var news = new Vue({
+				el: '#news',
+				data: {
+					items: [],
+					all_mark: '',
+					semester_mark: '',
+					schoolYear_mark: ''
+				}
+			});
+
+			/**
+			 * 打开新闻详情
+			 * 
+			 * @param {String} guid 新闻ID
+			 * @param {String} title  新闻标题
+			 */
+			function open_detail(item) {
+				//若详情页尚未预加载完成，则延时等待再执行
+				if(!webview_detail) {
+					setTimeout(function() {
+						open_detail(item);
+					}, 100);
+				}
+				//触发子窗口变更新闻详情
+				mui.fire(webview_detail, 'get_detail', {
+					guid: item.id,
+					title: item.title,
+					author: item.author,
+					date: item.date,
+					img: item.img
+				});
+
+				setTimeout(function() {
+					webview_detail.show("slide-in-right", 300);
+				}, 150);
+			}
+
+			/**
+			 * 1、将服务端返回数据，转换成前端需要的格式
+			 * 2、若服务端返回格式和前端所需格式相同，则不需要改功能
+			 * 
+			 * @param {Array} items 
+			 */
+			function convert(items) {
+				var newItems = [];
+				items.forEach(function(item) {
+					newItems.push({
+						id: item.ID,
+						title: item.title,
+						author: item.author,
+						img: item.img == '' ? '../images/jy.jpg' : item.img,
+						date: item.date
+					});
+				});
+				return newItems;
+			}
+		</script>
+	</body>
+
+</html>

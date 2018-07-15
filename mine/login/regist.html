@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="../../css/mui.css" rel="stylesheet" />
+
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 30%;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 70%;
+			}
+			
+			.mui-input-rowa {
+				width: 20%;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				margin-top: 1px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #00B8DA;height: 50px;">
+			<div style="margin-top: 3px;">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left" style="color: #FFFFFF;width: 35px;">
+					<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+				<h1 class="mui-title" style="color: #FFFFFF;left: 40px;right: 40px;font-size: 19px;">用户注册</h1>
+			</div>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<div class="mui-pull-right">
+					<button type="button" id="codebtn" class="mui-btn mui-btn-primary" onclick="getcode()" style="height: 39px;">点击发送</button>
+				</div>
+				<div class="mui-input-row">
+					<label>账号</label>
+					<input id='phoneNum' type="text" class="mui-input-clear mui-input" placeholder="请输入手机号">
+				</div>
+
+				<div class="mui-input-row mui-password">
+					<label>新密码</label>
+					<input type="password" id="newpassword" class="mui-input-password" placeholder="请输入密码">
+				</div>
+				<div class="mui-input-row mui-password">
+					<label>确认密码</label>
+					<input type="password" id="confirmpwd" class="mui-input-password" placeholder="请输入密码">
+				</div>
+
+				<div class="mui-input-row">
+					<label>验证码</label>
+					<input id='code' type="email" class="mui-input-clear mui-input" placeholder="请输入验证码">
+				</div>
+
+			</form>
+
+			<div class="mui-content-padded">
+				<button id='commit' class="mui-btn mui-btn-block mui-btn-primary">注册</button>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="../../js/userjs.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+		<script>
+			var network = true; //网路判断 //网路判断
+			var wait = 60;
+			var wt;
+			var mobile1 = /(^\d{11}$)/;
+			if(mui.os.plus) { //测试是否联网
+				mui.plusReady(function() {
+					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+						network = false;
+					}
+					if(!network) { //请求数据
+						mui.toast("当前网络不给力，请稍后再试");
+					}
+
+				});
+			}
+			var success = function(response) { //响应成功
+				if(response.code == 200) {
+					wt.close();
+					time();
+				} else {
+					mui.toast("系统响应失败，请稍后重试");
+				}
+			};
+
+			function getcode() {
+				if(getuserid("phoneNum").value != '') {
+					if(mobile1.test(getuserid("phoneNum").value) != false) {
+
+						ajax(getregCodeUrl, {
+							phoneNumber: getuserid("phoneNum").value,
+							tag: "reg"
+						}, "getcode");
+					} else {
+						mui.toast("手机号不符合规范");
+					}
+				} else {
+					mui.toast("请输入手机号");
+				}
+			}
+
+			function ajax(url, data, id) {
+				if(id == 'getcode') {
+					wt = plus.nativeUI.showWaiting();
+					mui.getJSON(url, data, success);
+				} else if(id == '') {
+					mui.getJSON(url, data, success);
+				}
+
+			}
+
+			function timest() {
+				var tmp = Date.parse(new Date()).toString();
+				tmp = tmp.substr(0, 10);
+				return tmp;
+			}
+
+			function time() {
+				if(wait == 0) {
+					getuserid("codebtn").removeAttribute("disabled");
+					getuserid("codebtn").innerHTML = "发送验证码";
+					getuserid("codebtn").style.backgroundColor = "#fe9900";
+					wait = 60;
+				} else {
+
+					getuserid("codebtn").setAttribute("disabled", true);
+					getuserid("codebtn").innerHTML = wait + "秒后重新获取";
+					getuserid("codebtn").style.backgroundColor = "#8f8b8b";
+					wait--;
+					setTimeout(function() {
+						time()
+					}, 1000)
+				}
+			}
+			getuserid("commit").addEventListener('tap', function(event) {
+				if(network) {
+					//	alert(hex_md5(getuserid("password").value));
+					if(getuserid("phoneNum").value != '' && getuserid("newpassword").value != '' && getuserid("confirmpwd").value != '' && getuserid("code").value != '') {
+						if(getuserid("newpassword").value.length >= 6 && getuserid("newpassword").value.length <= 16 && getuserid("newpassword").value == getuserid("confirmpwd").value && mobile1.test(getuserid("phoneNum").value) != false) {
+							mui.getJSON(regUrl, {
+								phoneNumber: getuserid("phoneNum").value,
+								password: hex_md5(getuserid("newpassword").value),
+								timestamp: timest(),
+								code: getuserid("code").value
+							}, success);
+						} else if(mobile1.test(getuserid("phoneNum").value) == false) {
+							mui.toast("手机号不正确");
+						} else if(!getuserid("newpassword").value.length > 6 || !getuserid("newpassword").value.length < 16) {
+							mui.toast("密码不符合规范");
+						} else {
+							mui.toast("两次输入密码不一致");
+						}
+					} else {
+						if(getuserid("phoneNum").value == '') {
+							mui.toast("请输入手机号");
+						} else if(getuserid("newpassword").value == '') {
+							mui.toast("请输入密码");
+						} else if(getuserid("confirmpwd").value == '') {
+							mui.toast("请输入密码");
+						} else if(getuserid("code").value == '') {
+							mui.toast("请输入验证码");
+						}
+					}
+				} else {
+					mui.toast("当前网络不给力，请稍后再试");
+				}
+			});
+		</script>
+	</body>
+
+</html>

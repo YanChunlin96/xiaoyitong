@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>校园资讯</title>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #00B8DA;height: 50px;">
+			<div style="margin-top: 3px;"> 
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left" style="color: #FFFFFF;width: 35px;">
+					<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+				<h1 class="mui-title" style="color: #FFFFFF;left: 40px;right: 40px;font-size: 18px;">校园资讯</h1>
+			</div>
+		</header>
+		<div id="news">
+			<div id="refreshContainer" class="mui-scroll-wrapper">
+				<div class="mui-scroll" style="margin-top: 50px;">
+					<ul class="mui-table-view">
+						<li id="newsdetails" class="mui-table-view-cell mui-media" v-for="item in items">
+							<a href="javascript:;" :data-guid="item.guid" @tap="open_detail(item)">
+								<div class="mui-media-body">
+									<img id="img" class="mui-pull-right" style="height: 75px;width: 75px;margin-top: 3px;margin-left: 20px;border-radius: 5%;" :src="item.img">
+									<p class='mui-ellipsis-2' style="color: #000000;font-size: 15px;margin-top: 3px;margin-right: 30px;height: 40px;">{{item.title}}</p>
+									<p style="margin-top: 15px;">
+										{{item.author}}
+										<span class="mui-pull-right" style="margin-right: 30px;">{{item.date}}</span>
+									</p>
+								</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			var count = 0;
+			var webview_detail = null; //详情页webview
+			var lastPage = 1;
+			mui.plusReady(function() {
+				var w = plus.nativeUI.showWaiting("加载中，请等待...\n3", {
+					loading: {
+						icon: "../../images/waiting.png"
+					}
+				});
+				w.onclose = function() {
+					clearInterval(t);
+				}
+				var n = 3;
+				var t = setInterval(function() {
+					n--;
+					w.setTitle("加载中，请等待...\n" + n);
+					if(n <= 0) {
+						w.close();
+						clearInterval(t);
+					}
+				}, 500);
+				pullupRefresh();
+			});
+			mui.init({
+				pullRefresh: {
+					container: '#refreshContainer',
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+
+			function pullupRefresh() {
+				setTimeout(function() {
+					mui.getJSON("http://47.92.82.112/public/index.php/news/News?pageRows=10&page="+lastPage, function(rsp) {
+						if(rsp.data && rsp.code == 200) {
+							news.items = news.items.concat(convert(rsp.data));
+							lastPage++;
+						} else {
+							this.endPullupToRefresh(true);
+							return;
+						}
+					});
+					mui('#refreshContainer').pullRefresh().endPullup((false));
+				}, 1000);
+			}
+
+			mui.plusReady(function() {
+				//预加载详情页
+				webview_detail = mui.preload({
+					url: 'newsdetails.html',
+					id: 'news_detail',
+				});
+			});
+
+			var news = new Vue({
+				el: '#news',
+				data: {
+					items: [] //列表信息流数据
+				}
+			});
+
+			/**
+			 * 打开新闻详情
+			 * 
+			 * @param {String} guid 新闻ID
+			 * @param {String} title  新闻标题
+			 */
+			function open_detail(item) {
+				//若详情页尚未预加载完成，则延时等待再执行
+				if(!webview_detail) {
+					setTimeout(function() {
+						open_detail(item);
+					}, 100);
+				}
+				//触发子窗口变更新闻详情
+				mui.fire(webview_detail, 'get_detail', {
+					guid: item.id,
+					title: item.title,
+					author: item.author,
+					date: item.date,
+					img: item.img
+				});
+
+				setTimeout(function() {
+					webview_detail.show("slide-in-right", 300);
+				}, 150);
+			}
+
+			/**
+			 * 1、将服务端返回数据，转换成前端需要的格式
+			 * 2、若服务端返回格式和前端所需格式相同，则不需要改功能
+			 * 
+			 * @param {Array} items 
+			 */
+			function convert(items) {
+				var newItems = [];
+				items.forEach(function(item) {
+					newItems.push({
+						id: item.ID,
+						title: item.title,
+						author: item.author,
+						img: item.img == '' ? '../../images/jy.jpg' : item.img,
+						date: item.date
+					});
+				});
+				return newItems;
+			}
+		</script>
+
+	</body>
+
+</html>
